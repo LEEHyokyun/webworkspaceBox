@@ -1,0 +1,24 @@
+ㅁ xml방식에서의 servlet 구조자체는 어노테이션 방식과 동일하다.
+response.setContentType("text/html;charset=utf-8");
+PrintWriter out = response.getWriter();
+//socket prograaming 구조와 유사!
+out.println("<html>");
+out.println("<body bgcolor=yellow>");
+out.println("GetTestServlet");
+out.println("</body>");
+out.println("</html>");
+
+ㅁ web module version 2.5설정시 별도의 xml 파일에서 servlet config 설정
+	* WEB-INF/web.xml로 생성
+		ㄴ web.xml은 web deploy descriptor, 웹 배포(설정 정보) 기술서(DD).
+	ㅁ xml에서의 Servlet 설정
+ 	<servlet>
+    <description></description>
+    	<display-name>HelloServlet</display-name>
+    	<servlet-name>HelloServlet</servlet-name>
+    	<servlet-class>step1.HelloServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>HelloServlet</servlet-name>
+    	<url-pattern>/HelloServlet</url-pattern>
+  	</servlet-mapping>

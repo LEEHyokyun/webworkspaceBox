@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>javascript submit</title>
+</head>
+<body>
+<!-- return false: 전송진행 하지 않는다. -->
+<form action="HelloServlet" method="get" onsubmit="return false">
+	<input type="submit" value="전송">
+</form>
+<br><br>
+<!-- return true: 전송진행 한다. -->
+<form action="HelloServlet" method="get" onsubmit="return true">
+	<input type="submit" value="전송2">
+</form>
+<br><br>
+<!-- return: 전송진행 한다. -->
+<form action="HelloServlet" method="get" onsubmit="return">
+	<input type="submit" value="전송3">
+</form>
+<br><br>
+<!-- onSubmit: . -->
+<form action="HelloServlet" method="get" onsubmit="return testForm()">
+	<input type="number" id="age" placeholder="나이를 입력하세요" required="required">
+	<input type="submit" value="전송4">
+</form>
+<script type="text/javascript">
+	function testForm(){
+		let a = document.getElementById("age").value;
+		if(a<0){
+			alert("잘못된 나이입니다.");
+			return false; //결국 onsubmit은 그 data혹은 함수를 호출한다.
+		//return false : submit하지 않는다.
+		}
+	}
+</script>
+</body>
+</html>

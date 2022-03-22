@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 
+action : 요청을 처리할 서버의 url
+ 
+ get : http://localhost:8888/webstudy05-servlet-basic/HelloServlet?message=helo
+ post : http://localhost:8888/webstudy05-servlet-basic/HelloServlet
+ 
+ -->
+<form action="HelloServlet" method="get">
+	<!-- server/client 전송시엔 tag name이 주효. -->
+	<!-- get방식에서는 url에 메시지가 노출된다, HelloServlet? -- ?이후 = QueryString -->
+	<input type="text" name="message" placeholder="메시지">
+	<input type="submit" value="get방식요청">
+</form>
+<hr>
+<form action="HelloServlet" method="post">
+	<!-- post 방식 상에서는 메시지가 노출되지 않는다. -->
+	<input type="text" name="message" placeholder="메시지">
+	<input type="submit" value="post방식요청">
+</form>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- form method 별도 명기하지 않는다면 get 방식으로 요청 -->
+	<form action="RadioServlet">
+		<!-- radio type도 required option 추가 가능! -->
+		<input type="radio" name="gender" value="male" required="required">남<br>
+		<input type="radio" name="gender" value="female">여<br>
+		<button type="submit">전송</button>
+	</form>
+</body>
+</html>

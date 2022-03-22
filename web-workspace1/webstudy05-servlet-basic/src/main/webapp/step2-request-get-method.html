@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>request</title>
+</head>
+<body>
+<!-- form에서 별도 method를 명기하지 않으면 기본적으로 get method. -->
+<!-- action : url pattern -->
+<form method="get" action="GetTestServlet">
+	<input type="text" name="food" placeholder="점심메뉴" required="required">
+	<input type="number" name="count" placeholder="수량" required="required">
+	<input type="submit" value="전송">
+	<!-- 
+		a tag 링크 방식도 get 요청방식
+		해당 url pattern과 Query String대로 request가 처리, Get method의 일종.
+		? - 구분자
+	 -->
+	 <br><br>
+	 <a href="GetTestServlet?food=치킨&count=5">주문1</a><br>
+	 <a href="GetTestServlet?food=맥주&count=3">주문2</a><br>
+</form>
+</body>
+</html>

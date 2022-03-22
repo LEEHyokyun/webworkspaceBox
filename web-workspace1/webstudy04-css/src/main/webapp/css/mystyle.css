@@ -1,0 +1,31 @@
+@charset "UTF-8";
+/*
+	여러 대상을 선택할 때 : selector, selector
+*/
+	table, td{
+		border: 1px solid black;
+	}
+	
+	table{
+		border-collapse: collapse;
+	}
+	
+	td{
+		padding: 10px;
+	}
+	
+	div{
+		background-color: lime;
+	}
+	
+	span{
+		background-color: gray;
+	}
+	
+	.testDiv{
+		background-color: orange;
+	}
+	
+	#testSpan{
+		background-color: yellow;
+	}

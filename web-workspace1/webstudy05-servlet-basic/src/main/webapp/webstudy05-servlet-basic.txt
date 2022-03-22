@@ -1,0 +1,93 @@
+ㅁ servlet
+	ㅁ web programming의 기초, server side
+	ㅁ Java class로 개발하며, Model2의 MVC Controller를 담당한다.
+	ㅁ 설정하는 방법은 annotation(최근방식), xml(정통방식)으로 나뉜다.
+		ㄴ annotation 방식은 3.0이상에서 지원(@WebServlet(url pattern))
+			* url pattern : url pattern이 명시된 대로, client가 해당 서블렛을 요청하기 위해 설정하는 url이다.
+			* http://localhost:8888/webstudy05-servlet-basic/hs
+
+ㅁ JSP
+	ㅁ Java Server Page, server 상에서 동적인 HTML(즉 동적 웹페이지)를 개발하기 위한 기술
+		ㄴ "제공하는 틀"은 동일하되, data/정보에 따라 다르게 interface를 유동적으로 제공(동적 웹페이지) 
+	ㅁ template engine
+		ㄴ thymeleaf 등..매우 여러가지.
+	ㅁ HTML 구조 상에서 jsp tag를 이용해 java code를 삽입하는 형태.
+		ㄴ Model2 MVC에서 View 역할
+	
+ㅁ Web MVC(Model2 MVC)
+	ㅁ Spring에 적용되는 design pattern
+	ㅁ Model : business logic, data access logic(VO, DAO, service와 같은 java component 담당)
+	ㅁ View : client에게 동적인 화면을 제공(JSP 담당)
+	ㅁ Controller : 제어자, 클라이언트의 요청을 분석하여 Model과 연동하여 적절한 view를 client에게 제공(Servlet) 
+		
+ㅁ HTTP
+	ㅁ HyperText Transfer Protocol
+
+ㅁ Web server
+	ㅁ HTTP를 기반으로 한 웹문서를 service하는 서버
+	ㅁ web browser client로부터 HTTP Request를 받아 정적인 컨텐츠를 서비스
+	
+ㅁ WAS
+	ㅁ Web server + Web container
+	ㅁ DB연동/타 server와의 연동, 다양한 로직을 처리하는 동적인 컨텐츠를 제공하기 위해 만들어진 Application server
+	* Apache tomcat이 대표적
+	
+ㅁ Web container
+	ㅁ server side에서 servlet/JSP의 실행환경을 제공 
+	
+ㅁ Java Web programming 실행환경
+	1) WAS 설치(Apahce tomcat)
+	2) 포트설정(apache tomcat/conf/server.xml에서 port설정 - oracle db와의 충돌방지)
+	3) get method 한글처리 : URIEncoding : utf-8
+	4) class 자동 reload 설정 : context.xml에서 reloadable = true, Servlet을 포함한 java class 변경시 서버에 자동 리로드
+
+ㅁ Client Side : HTML(Web document의 content) / CSS(style) / javascript(동작)
+	ㄴ 말 그대로 Client 측에서 실행, 정적 data 및 문서해석을 brwser 측에서 실행한다.
+ㅁ Server Side : Servlet, JSP
+	ㄴ 말 그대로 server에서 실행한다.
+
+※ 설정정보(메타 데이터)
+- 어노테이션 : 소스코드 상에 설정정보 기술
+	ㄴ 시스템 실행에 영향을 줄 수 있는 주석, 런타임 및 컴파일 시점에서 작동
+- xml : 소스코드와 설정정보 분리
+
+※ Http Request Method(요청방식)
+ㅁ Get method : 주로 정보조회용, url상 정보조회가 노출, 전송 데이터 용량이 제한된다.
+	ㄴ 정적정보제공
+ㅁ Post method : 주로 정보제출(전달), server 자원의 데이터 변경 및 전달시 사용, 전송 데이터 용량 제한은 별도로 없다(서버 상황에 따라 다름).
+	ㄴ url상 전송정보가 노출되지 않는다(로그인 등에 사용)
+	ㄴ http req body에 내장되어 정보가 전송(별도 한글처리가 필요)
+	
+※ Servlet에서의 get mmethod 처리
+response.setContentType("text/html;charset=utf-8");
+PrintWriter out = response.getWriter();
+//socket prograaming 구조와 유사!
+out.println("<html>");
+out.println("<body bgcolor=yellow>");
+out.println("GetTestServlet");
+out.println("</body>");
+out.println("</html>");
+//향후 view는 JSP가 담당한다.
+out.close();
+	ㄴ Query String: Servlet?name=~~&value=~~
+
+※ a href tag에서의 get method
+	ㅁ QueryString으로 직접 작성한 겨우
+		ㄴ <a href="GetTestServlet?food=치킨&count=5">주문1</a><br>
+
+※ Servlet에서의 post method 처리
+response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
+		// socket prograaming 구조와 유사!
+		out.println("<html>");
+		out.println("<body bgcolor=yellow>");
+		out.println(getServletName());
+		out.println("</body>");
+		out.println("</html>");
+		// 향후 view는 JSP가 담당한다.
+		out.close();
+
+※ post 방식에서의 client data는 req에서 body에 내장되어 전송된다.
+	* req body에 내장, 별도 한글처리 반드시 필요하다.
+		ㄴ 따라서, client data는 req body에 내장, 이를 출력하기 위해 접근 및 확보할때도 req.getparameter...
+	* servlet request의 setCharacterEncoding method 사용, Spring post 방식 한글처리도 이와 유사하게 진행한다.
