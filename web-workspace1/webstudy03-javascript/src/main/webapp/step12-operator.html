@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>javascript 연산자</title>
+</head>
+<body>
+<button type="button" onclick="testOperator()">확인</button>
+<script type="text/javascript">
+	function testOperator(){
+		let name1 = "월요일";
+		let name2 = "월요일 ";
+		console.log(name1.length);
+		console.log(name1.length);
+		console.log(name1==name2); //false
+		console.log(name1==name2.trim());//true
+		let age1=21;
+		let age2="21";
+		console.log(age1==age2); //강제 형변환하여 비교
+		console.log(age1===age2); //type까지 비교
+		console.log(age1+age2); //age2가 문자열이므로 그대로 concat하여 출력
+		let age3=parseInt(age2); //정수형변환
+		console.log(age1+age3);
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<button type="button" onclick="testArray1()">array test</button>
+<button type="button" onclick="testArray2()">array test</button>
+<form>
+	<input type="checkbox" name="food" value="피자">피자<br>
+	<input type="checkbox" name="food" value="맥주">맥주<br>
+	<input type="checkbox" name="food" value="치킨">치킨<br>
+</form>
+<button type="button" onclick="testArray3()">array test</button>
+<script type="text/javascript">
+	function testArray1(){
+		let arr=new Array(3);
+		arr[0] = "돌멩이";
+		arr[1] = "문득";
+		arr[2] = "유자차";
+		for(let i=0;i<arr.length;i++){
+			alert(arr[i]);
+		}
+	}
+	
+	function testArray2(){
+		let nameArray=["1","2","3"];
+		for(let i=0;i<nameArray.length;i++){
+			alert(nameArray[i]);
+		}
+	}
+	
+	function testArray3(){
+			let foodArray = document.getElementsByName("food"); //return list
+			alert(foodArray.length);
+			for(let i=0;foodArray.length;i++){
+				alert(foodArray[i].value);
+			}
+	}
+</script>
+</body>
+</html>

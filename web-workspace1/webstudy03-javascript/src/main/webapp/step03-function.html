@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Javascript function</title>
+</head>
+<body>
+Javascript function <br><br>
+<!-- onclick, function 호출 -->
+<input type="button" value="click here" onclick="hello()"><br>
+<input type="button" value="click here" onclick="bye()"><br>
+<input type="button" value="click here" onclick="params('감사합니다', 77)"><br>
+<input type="button" value="click here" onclick="makeInfo('감사')"><br>
+<script type="text/javascript">
+	function hello(){
+		console.log("Hello World");
+		alert("Hello World");
+	}
+	
+	function bye(){
+		console.log("Bye World");
+		alert("Bye World");
+	}
+	//parameters
+	function params(info, data){
+		alert(info+" "+data);
+	}
+	//return
+	function makeInfo(info){
+		let message = info+"합니다";
+		alert(message);
+		return message;
+	}
+</script>
+</body>
+</html>

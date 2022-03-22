@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Javascript innerHTML</title>
+<style type="text/css">
+	div{
+		background-color: orange;
+	}
+	span{
+		background-color: yellow;
+	}
+</style>
+</head>
+<body>
+<!-- div는 전체적인 화면요소! -->
+<div id="testDiv">div입니다.</div> 
+<!-- span은 data를 표현하고자 할때! -->
+<span id="testSpan">span입니다.</span>
+<br><br>
+<button type="button" onclick="showInfo()">확인</button>
+<script type= "text/javascript">
+	function showInfo(){
+		alert(document.getElementById("testDiv").innerHTML);
+		//testDiv id tag에 속하는 HTML정보를 반환한다.
+		alert(document.getElementById("testSpan").innerHTML)
+		//마찬가지로 testSpan id tag에 속하는 HTML정보를 반환한다.
+		document.getElementById("testDiv").innerHTML = "div 정보를 변경합니다";
+		
+	}
+</script>
+</body>
+</html>

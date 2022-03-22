@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>check box</title>
+</head>
+<body>
+<form>
+	<input type="checkbox" id="confirmCheck" value="agree">동의<br>
+	<button type="button" onclick="testCheckBox()">확인</button>
+	<button type="button" onclick="testCheckBox2()">체크</button>
+	<button type="button" onclick="testCheckBox3()">체크해제</button>
+</form>
+<script type="text/javascript">
+	function testCheckBox(){
+		let chkComp = document.getElementById("confirmCheck");
+		console.log(chkComp.value); //return value
+		//해당 요소에 대해 할당받는다, getter
+		console.log(chkComp.checked);
+	}
+	
+	function testCheckBox2(){
+		//해당 요소에 대한 할당 가능, setter
+		document.getElementById("confirmCheck").checked=true;
+	}
+	
+	function testCheckBox3(){
+		//해당요소에 대한 할당 가능, setter
+		document.getElementById("confirmCheck").checked=false;	
+	}
+</script>
+</body>
+</html>

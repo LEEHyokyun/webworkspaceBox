@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>document object</title>
+</head>
+<body>
+<form>
+	<input type="text" name="userName" placeholder="사용자명" id="ul">
+	<button type="button" onclick="testDom()">확인</button>
+</form><br><br>
+
+<form>
+	<input type="search" placeholder="검색어를 입력하세요" id="keyword">
+	<button type="button" onclick="testDom2()">확인</button>
+</form><br><br>
+<script type="text/javascript">
+	function testDom(){
+		//input에 입력한 data값을 전달받아 출력한다.
+		let data = document.getElementById("ul");
+		if(data.value==""){
+			alert("사용자 명을 입력하세요!");
+		}else{
+			alert("입력한 값은: "+data.value);
+			data.value = ""; //입력 부분을 초기화
+		}
+	}
+	function testDom2(){
+			let searchComp = document.getElementById("keyword");
+			alert(searchComp.value);
+			
+			if(searchComp.value=""){
+				alert("검색어를 입력하세요!");
+			}else{
+				alert(searchComp.value);
+				searchComp.value="";
+			}
+	}
+	
+</script>
+</body>
+</html>

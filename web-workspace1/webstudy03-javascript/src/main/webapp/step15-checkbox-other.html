@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CheckBox</title>
+</head>
+<body>
+<form>
+	<input type="checkbox" name="dinner" value="삼겹살">삼겹살<br>
+	<input type="checkbox" name="dinner" value="족발">족발<br>
+	<input type="checkbox" name="dinner" value="소주">소주<br>
+	<button type="button" onclick="order()">주문하기</button>
+</form>
+<script type="text/javascript">
+	function order(){
+		let flag = false;
+		
+		let isChecked = document.getElementsByName("dinner");
+		for(let i=0;i<isChecked.length;i++){
+			if(isChecked[i].checked){
+				flag = true;
+				break;
+			}
+		}
+		
+		if(flag){
+			alert("선택하신 메뉴로 주문하였습니다.");
+		}else{
+			alert("메뉴를 하나이상 선택하세요!");
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Javascript form</title>
+</head>
+<body>
+<form>
+	<input type="text" id="userId" placeholder="ID">
+	<button onclick="testForm()">확인</button>
+</form>
+<script type="text/javascript">
+	function testForm(){
+		let idComp = document.getElementById("userId");
+		if(idComp.value==""){
+			alert("아이디를 입력하세요");	
+		}else{
+			alert(idComp.value);
+		}
+	}
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>window location</title>
+</head>
+<body>
+<button type="button" onclick="confirmTest()">Click here</button>
+<script type="text/javascript">
+	function confirmTest(){
+		//javascript DOM의 최상위 객체 window의 function인 confirm 활용.
+		let result = confirm("막국수를 먹어봅시다");
+		alert(result);
+		location.href="https://www.naver.com";
+	}
+	</script>
+</body>
+</html>

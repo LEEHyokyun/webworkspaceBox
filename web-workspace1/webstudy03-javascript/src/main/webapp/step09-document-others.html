@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Window Documents</title>
+</head>
+<body>
+	<form>
+		<input type="text" id="orgText" autofocus="autofocus" onkeyup="enterKey()">
+		<!-- 입력 후 입력값을 다른 요소의 data로 전달 -->
+		<button type="button" onclick="moveTxt()">이동</button>
+		<input type="text" id="destText">
+	</form>
+	<script type="text/javascript">
+		function moveTxt(){
+			let orgText = document.getElementById("orgText");
+			let destText = document.getElementById("destText");
+			
+			destText.value = orgText.value;
+			orgText.value="";
+			orgText.focus();
+		}
+		
+		function enterKey(){
+			if(event.keyCode==13){
+				moveTxt();
+			}
+		}
+	</script>
+</body>
+</html>

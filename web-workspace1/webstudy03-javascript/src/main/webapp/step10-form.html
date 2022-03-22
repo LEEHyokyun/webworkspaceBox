@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Javascript form</title>
+</head>
+<body>
+<form>
+	<input type="text" id="userId" placeholder="ID" autofocus="autofocus">
+	<input type="number" id="money" placeholder="입금액" min="2">
+	<button onclick="testForm()" type="button">확인</button>
+</form>
+<!-- button tag에 별도의 타입을 명시하지 않는다면 기본적으로 submit type(server 전송) -->
+<!-- 일반 버튼은 반드시 button tag에 type을 명시해주어야 한다(type="button")->그래야 서버전송 안하고 오류를 수반하지 않는다. -->
+<script type="text/javascript">
+	function testForm(){
+		let idComp = document.getElementById("userId");
+		let moneyComp = document.getElementById("money"); 
+		if(idComp.value.trim()==""){
+			//공란까지 제거하였을때 문자열이 비어있을 경우
+			alert("아이디를 입력하세요");	
+		}else if(moneyComp.value==""){
+			alert("입금액을 입력하세요");
+		}else if(moneyComp.value<1){
+			alert("입금액은 1원 이상이어야 합니다.");
+		}else{
+			alert("입금자: "+idComp.value.trim());
+			//trim : 문자열 양 여백 제거
+			alert("입금액: "+moneyComp.value);
+		}
+	}
+</script>
+</body>
+</html>

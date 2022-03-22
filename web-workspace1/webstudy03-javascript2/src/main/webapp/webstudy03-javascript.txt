@@ -1,0 +1,21 @@
+ㅁ Javascript
+	ㅁ HTML : 웹문서 content 담당
+	ㅁ CSS : 웹문서의 디자인 스타일 담당
+	ㅁ Javascript : 웹문서 동작 담당
+		ㅁ ECMA Script 표준을 준수하는 스크립트 언어
+			ㄴ 다양한 브라우저에서 일관성 있는 동작을 위한 스크립트 표준
+			ㄴ ECMA International, 정보 통신 표준을 제정하는 표준화 기구
+				* ES5 : var, 중복선언 가능(Function-level scope)
+					ㄴ 선언된 함수 바깥에서도 해당 변수는 유효하다(할당 or undefined)
+					ㄴ 즉, function 전체에서 유효한 값이다.
+				* ES6 : let, 중복선언 불가(Block level scope) + const, 상수
+					ㄴ 선언된 block 바깥에서는 사용할 수 없다(not defined)
+					ㄴ 즉, block 내부에서만 유효한 값이다.
+		ㅁ DOM, Document Object Model : Javascript에서 HTML문서를 제어하기 위한 프로그래밍 인터페이스
+			* 웹브라우저에서 지원하며, HTML 문서요소를 계층적으로 표현한다.
+			* 각 문서 요소를 javascript에서 제어/조작하기 위한 방법을 제공한다.
+		ㅁ HTML은 error의 개념이 없다.
+			* 컴파일 단계가 아닌 런타임 단계에서 error를 탐색하므로, 오류가 생긴다면 동작이 안이루어 질 뿐이다.
+			* 디버깅은 console을 이용(개발자 도구 등)한다.
+		ㅁ DOM의 최상위 계층이자 객체는 window이며, 다양한 함수를 제공한다.
+			* key point : 원하는 내장함수를 탐색하고 적절하게 사용할 수 있어야 한다.
