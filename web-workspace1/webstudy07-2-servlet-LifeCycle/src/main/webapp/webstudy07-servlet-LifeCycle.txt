@@ -1,0 +1,123 @@
+ㅁ xml방식에서의 servlet 구조자체는 어노테이션 방식과 동일하다.
+response.setContentType("text/html;charset=utf-8");
+PrintWriter out = response.getWriter();
+//socket prograaming 구조와 유사!
+out.println("<html>");
+out.println("<body bgcolor=yellow>");
+out.println("GetTestServlet");
+out.println("</body>");
+out.println("</html>");
+out.close();	
+
+ㅁ web module version 2.5설정시 별도의 xml 파일에서 servlet config 설정
+	* WEB-INF/web.xml로 생성
+		ㄴ web.xml은 web deploy descriptor, 웹 배포(설정 정보) 기술서(DD).
+	ㅁ xml에서의 Servlet 설정
+ 	<servlet>
+    <description></description>
+    	<display-name>HelloServlet</display-name>
+    	<servlet-name>HelloServlet</servlet-name>
+    	<servlet-class>step1.HelloServlet</servlet-class>
+  	</servlet>
+  	<servlet-mapping>
+    	<servlet-name>HelloServlet</servlet-name>
+    	<url-pattern>/HelloServlet</url-pattern>
+  	</servlet-mapping>
+  
+ ㅁ client에서 요청하는 html form, server(servlet)의 data 전송과정
+ 	[doGet, Get]
+ 	* client
+ 		ㄴ <form action="url-pattern" method="get">
+ 			<input type="text" name="food">
+ 			<button type="submit">전송</button>
+ 	* server
+ 		ㄴ annotation / xml으로 url pattern 설정
+ 		ㄴ url pattern에 해당하는 servlet의 doGet() 실행
+		ㄴ client의 정보를 받아 해당 정보에 대해 request.getParameter
+
+ㅁ servlet 계층구조와 life-cycle
+	※ xml 기반 설정 이해를 위해 web module version을 2.5로 설정
+	ㅁ 계층구조(Servlet Hierarchy)
+		ㄴ jsp는 HttpServlet 클래스를 상속받으며, 화면을 출력하기 위한 view용 파일이다.
+			ㄴ 다만 jsx처럼, html 구조에서 java 문법을 그대로 적용가능하다는 점에서 작성이 용이하다.
+			ㄴ jsp는 servlet 기반의 코드이며, webtomcat의 work(작업공간이력 저장)에서 저장된다(java파일 regenerate/class파일 recompile 과정진행)
+		ㅁ 인터페이스
+			* javax.servlet.servlet / javax.servelt.servlet.servletconfig
+			* 표준사용법, 하나의 일관된 소통방식을 제시하면서 다양한 계층구조를 형성하기위한 최상위 계층구조이다.
+			ㅁ servlet 인터페이스는 모든 서블릿(jsp포함)이 implements 해야하는(기능적으로) abstract method를 가진다.
+		ㅁ 인터페이스의 하위계층이자 abstract class
+			* 부모 class
+			* 인터페이스와는 달리, 구체적인 멤버(변수와 메소드)를 상속하여 재사용성 및 생산성을 향상시킨다(key point: 재사용성)
+			* 결과적으로 다양한 계층구조로 인해 재사용성이 향상되고, WAS가 변경되어도 구조 자체는 동일하다.
+			ㅁ GenericServlet, servlet interface를 implements하는 상위 부모 클래스, 프로토콜에 독립적인 abstract class
+				ㄴ 일반적인 서버 프로그램이 가져야하는 기능을 자식에게 상속, 자식에서 구현하는 service()는 abstract method로 구현강제
+			ㅁ HttpServlet, GenericServlet을 구현하며 Http 프로토콜에 특화된 서비스를 구현하는 abstract class
+				ㄴ 일반적인 Java web programming(servlet, jsp 등)시 이 httpServlet을 상속받아 서비스 구현한다.
+		ㅁ 계층구조(interface/abstract class)의 장점
+			* 일반 web application 개발시 servlet API(HttpServletRequest,HttpServletResponse, HttpSession interfcae 등)를 이용하여 개발
+			* 실제 동작은 개별 WAS 제품군(tomcat, Jboss	 등)에서 servlet API 구현체를 적당하게 구현하여 동작함
+				ㄴ 다른 WAS제품으로 변경되더라도, interface는 변함없으므로 구조적으로 동일하게 유지지
+				ㄴ 웹어플리케이션과 WAS제품간 결합도를 낮추고 유지보수성 향상
+				ㄴ WAS가 달라지더라도, 구조적으로 동일하게 유지가 가능하다는 점이 핵심.
+	ㅁ Servlet life cycle
+		* 모든 servlet/jsp는 servlet interface의 method를 구현해야 한다.
+			ㄴ jsp도 동일한 방식으로 진행!
+		※ servlet 객체는 container에 의해 생성된다.
+		ㅁ called by servlet container, Servlet/JSP의 최상위 인터페이스인 servlet이 정의하는 abstract method
+			* 반드시 모든 JSP/Servlet class가 구현해야하며 보유하고 있어야 하는 life cycle.
+			ㅁ init() 
+				* servlet 당 한번 실행, 서블릿의 초기화 작업을 수행
+			ㅁ service()
+				* client 요청시마다 매번 실행, 해당 서블릿이 client에게 말 그대로 서비스
+					ㄴ 내부적으로 httpRequestMethod에 따라 doGet, doPost 호출
+			ㅁ destroy()
+				* 해당 서블릿이 종료되기 직전에 한번 실행(백업 등)
+				* WAS or servlet 종료전 실행!
+		ㅁ servlet life cycle을 관리하는 주체는 WAS, web container/Servlet container이다(called by ?).
+			ㄴ client별 thread를 만들어 관리, thread는 "실행단위" "자원절약"
+		ㅁ 첫 client의 실행부담을 줄어주기위한 조치(즉, 최초 client의 응답속도가 향상된다)
+			ㅁ load on startup - application 시작시 대신 init까지 실행
+				ㄴ <load-on-startup>1</load-on-startup>
+				ㄴ web application 시작시점에서 해당 서블릿 객체 생성 및 init까지 미리 하도록(다른 서블릿은 요청시 생성)
+					ㄴ 최초 client가 init할때까지 대기필요(즉 url pattern으로 요청이 올때까지 대기)
+			ㅁ web.xml에서의 load on start 설정
+				  	<servlet>
+    				<description></description>
+    				<display-name>LoadOnStartUpTest</display-name>
+    				<servlet-name>LoadOnStartUpTest</servlet-name>
+    				<servlet-class>step3.LoadOnStartUpTest</servlet-class>
+    				<load-on-startup>1</load-on-startup>
+  					</servlet>
+		
+ㅁ WAS
+	* web application server, 설정정보(web.xml, anntation 등)을 제일 먼저 loading, client 첫 요청시 servlet 객체생성, init->service()->destroy() 호출 및 실행
+		ㄴ url pattern 메모리 적재
+	ㅁ bin : 실행파일
+	ㅁ lib : 환경 및 도구 제공
+	ㅁ webapps:  배포파일
+	ㅁ work : 작업공간이력, 작성이력(jsp)
+
+ㅁ Servlet config, Servlet context
+	ㅁ Servlet config
+		* 개별 servlet에 특정한 정보를 저장하는 객체
+			ㄴ servlet이 동작하는데 필요한 설정정보, servlet context 객체의 주소값을 보유하고 있다.
+		* HttpServlet을 상속받는, 개발자가 다루는 Servlet 파일(객체)는, 최초 init 메소드(ServeltConfig config)(우리가 작성한 메소드와는 다른 오버로딩된 메소드)실행시, 매개변수 인자로 servlet config 객체를 전달한다.
+		* 마치 사원증과 같은 역할을 한다 -> Servlet Config는 servlet 당 하나가 저장된다다
+		* config에 저장되는 정보는 servlet 개별적인 설정 정보 - init param
+	ㅁ Servlet context
+		* 주변 환경에 따른 조건, 웹 어플리케이션 내 모든 servlet/jsp(=application)이 공유하는 자원이다.
+		* 웹 어플리케이션 당 하나가 생성되며, WAS에서는 application 시작시점에 servlet 객체를 생성하고, 종료시점에 소멸된다.
+		* 마치 사내 인트라넷과도 같다.
+		* context에 저장되는 정보는 보안정보나 DB연결정보 - context-param
+	※ 마치 사내 인트라넷에 사원증을 가진 사원만 접근할 수 있듯이, Servlet context에 접근할 수 있는 주체는 config가 생성된 servlet만이 가능하다.
+
+ㅁ Web application의 life cycle, "ServletContextListener"
+	ㅁ WAS 뿐만 아니라, web application 자체의 시작/종료시점의 파악과 이에 대한 이벤트를 이용해야하는 경우가 있다.
+		ㄴ DB memory load, application 보안 설정, 파일백업, 로그파일기록 등이 이에 속한다.
+		ㄴ 이에 대한 web application 시작, 종료시점을 감지하는 메소드로, servletContextListener/servletcontextInitialized/servletcontextDestoyed가 존재한다.
+			ㄴ * 특히 시작시점에서 중요한 작업은 보안작업이다.	
+
+ㅁ init 메소드
+	* 최초 실행시 : init(serveltConfig)을 실행하여 기본설정정보를 초기화
+	* 그 후에 자동적으로 init(), 즉 인자없는 init이 그 후에 호출되어 init(){} 메소드를 작성해주면 그에 따라 실행이 된다.
+	* 결국 기본적으로 init은 두번 실행되는 셈이다.
