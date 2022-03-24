@@ -1,0 +1,6 @@
+ㅁ anntation 방식의 servlet 설정
+	ㅁ @WebServlet(urlPatterns="/LifeCycleServlet", loadOnStartup = 1, initParams= {@WebInitParam(name="springconfig", value="springmvc.xml")})
+		* url pattern 설정
+		* loadonStartup 설정(client의 요청이 아닌, application 시작시 미리 init까지 실행하여 client 로드의 부담을 덜어준다)
+		* initParams 설정(servelt config의 annotation 기반 설정)
+	ㅁ 전체적인 실행순서는 application -> servlet

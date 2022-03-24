@@ -1,0 +1,74 @@
+※ HTTP Protocol의 특성
+	ㅁ stateless, 사용자 상태 정보를 유지하지 않는다(요청에 대한 응답이 종료되면 접속종료, 서버자원 절약).
+※	Session 관리
+	ㅁ 사용자 상태 정보를 일정 조건하 유지한다.
+※ 사용자 상태정보를 유지하는 방식
+	ㅁ Cookie
+		* 사용자 상태정보를 client에 저장
+		* 저장용량의 제한(4Kb)
+		* 중요도가 낮은 일시적 정보
+		* data type은 문자열로 한정
+		* Cookie 유효시간을 별도로 설정하지 않으면, browser 실행시에만 유효(즉, browser 종료시 cookie 소멸)
+			ㄴ 유효시간 설정시 유효시간 내에서만 사용 가능
+			ㄴ cookie value 저장시 공란을 허용하지 않는다.
+		ㅁ 진행과정
+		※ 진행과정은 순서보다는 순환의 개념이다, res를 통해 cookie정보를 client에게 전달 및 저장
+		※ client 측에서는 req에서 cookie 정보를 받아올지 결정하고, 받아온다면 list형식으로 반환받고 특정 쿠키 조회 및 value값 확인
+			1) client 접속, sever측에서 cookie 생성 및 client에게 전달, 
+			* client(browser) -- req -- SetCookieServlet -- cookie생성 및 유효시간 설정
+			* 개발자가 setCookie에서 설정한 내용대로 cookie를 설정 및 저장
+				ㄴ new Cookie(name, value) / cookie.setMaxAge(ms);
+			* 그 후, response.addCookie(cookie)에 따라 server측에서 client에게 cookie 전달
+		
+			2) client 접속, client측에서 cookie 저장, cookie 존재시 value 확인(이 과정 자체는 req를 기반으로 진행)
+			* client(browser) -- req -- req.getCookies():Cookies[], cookie 정보 반환
+				ㄴ 즉, req를 통해 cookie 정보를 반환받아 cookie value값을 활용하게된다.
+			* cookie 존재시 value를 확인
+				ㄴ getName(), getValue() 이용
+			* 위 과정은 client가 req를 통해 cookie 요청, 전달받는 것으로 이루어짐 그 후 res받음.
+		※ cookie 설정후 res.addCookie()
+	ㅁ Session(HttpSession)
+		* 사용자 상태정보를 server에 저장
+		* 저장용량, 데이터 타입에 제한은 없으나 그만큼 server 부담이 증가할 수 있다.
+		* 로그인, 로그아웃시 주로 활용하며, WAS에 session 저장시간이 별도로 저장되어 있다.
+			ㄴ apache-tomcat에서는 web-tomcat>config>web.xml에서 30분으로 설정(=즉, 로그인 유지시간이 기본 30분) 
+		ㅁ session 유지시간
+			1) 지정시간내 새로운 요청(click 등)이 없다면 session은 만료된다.
+			2) browser 종료시 session은 만료된다.
+			3) 로그아웃을 실행할 때 session은 만료된다.
+		ㅁ HttpSession 관련 주요 메서드
+			ㅁ HttpServletRequest에서 getSession()/getSession(true)를 통해, 즉 기본적으로 req에 session 요청 및 반환받는다.
+				ㄴ true : 없으면 새로 생성
+			ㅁ HttpServletRequest의 getSession(false)
+				ㄴ false : 없으면 null 반환
+			ㅁ HttpSession의 setAttribute(name, value)를 통해, String type의 name-Object type의 value로 저장
+			ㅁ getAttribute(name)를 통해 object type의 value를 받환받는다.
+				ㄴ 필요시 다른 type으로 type casting 한다.
+			ㅁ HttpSession의 invalidate()를 통해, session 무효화 즉 로그아웃시 사용
+			※ 로그인시 -> request.getSession()
+				로그아웃시 -> session.invalidate()
+		ㅁ application에서의 session 유지시간 설정
+			ㅁ WEB-INF/web.xml
+		ㅁ Server는 로그인시 기본적으로 session 정보를 활용한다.
+			* session id를 통해 로그인 유저를 판단하고, 판단후에 session 정보(value)를 받아온다.
+			* 정보를 받아올때는 id와 매칭한다.
+				ㄴ 즉, session id를 받아온 후에 id로 로그인 유저 판단, 이와 매칭되는 정보가 있어야 session 정보 확보 가능
+				ㄴ 정보만료 등 정보가 없다면 정보확보불가능.
+
+※ 로그인 과정에서의 session 처리 흐름
+	ㄴ session도 내부적으로 cookie를 활용한다(최초 로그인후 session id client에 저장시 cookie에 담아 전달)
+
+client browser -- req --> LoginServlet
+							  if(db에 있는 id와 password가 일치하면)
+							  HttpSession session = request.getSession(); //session 생성
+							  session.setAttribute(name, value); //session에 해당 인증정보 전달
+				<-- res -- 로그인완료 응답시 client에 sessionid에 해당하는 name의 cookie가 cookie로 전달됨
+							  (=session id를 client측에 cookie에 저장하여 전달, client는 이를 받아 session id를 저장)
+※로그인 후 인증회원만 서비스를 받을 수 있는 프로그램에 접속하였을때 session 처리 흐름
+
+client browser -- req --> CafeServlet
+							  HttpSession session = request.getSession(false); //기존 세션이 있으면 반환, 없으면 null
+							  //이후 클라이언트 브라우저에 저장된 session id 값과 비교, 서버측 session id와 비교
+							  // 일치하면 session 객체 반환(=로그인한 유저로 판명됨)
+							  if(session!=null&&session.getAttribute("name")!=null) -> 정보제공
+							  //session 정보에 저장된 id/pw를 받아와 로그인을 유지함
