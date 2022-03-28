@@ -23,3 +23,18 @@
 	※ DOM 개념도 같이 정리
 		ㄴ Javscript DOM, javscript를 기반으로 웹페이지 element를 제어하기위한 프로그래밍 인터페이스.
 		ㄴ Javascript method를 제공하는 최상위 object 계층의 model이다.
+		
+ㅁ 웹개발 변천사
+	ㅁ 웹개발 초기 방식 - Model1
+		* JSP - Database, jsp 상에서 db와 연동하는 구조
+		* 기존 jdbc 연동설정을 할때마다 작성해주는 것과 달리, Model1을 적용하여 개발 생산성 및 유지보수성을 향상시켰다.
+		* SW Architecture, 소프트웨어 아키텍쳐(설계구조)는 소프트웨어 	구성 요소들 사이의 관계를 표현한다.
+			ㄴ SW 설계와 업데이트를 control하는 지침과 원칙.
+	※ Model1
+		ㅁ 웹어플리케이션 설계구조의 하나.
+		ㅁ JSP --- Java Component(DAO/VO)	--- DB
+			ㄴ Java component를 Java Bean이라고도 함(*Component, 독립적인 기능단위를 이룰때)
+			ㄴ 그러한 Bean을 제공하기 위한 기본요소를 제공
+			* JSP : Client의 request를 분석, Java Component(Beans)와 연동하여 적절한 결과를 client에게 response
+			* Java Component(Beans) : Database Access Logic, Business Logic 담당
+		ㅁ 설정은 인터페이스로 한번에, DAO로부터 count value를 가져오는 방식으로 코드 간결화
