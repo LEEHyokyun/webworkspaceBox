@@ -1,0 +1,25 @@
+ㅁ QeuryString
+	ㅁ 웹 프로그래밍에서 입력 데이터를 전달하는 방법 중 하나이다.
+	ㅁ 사용자가 입력한 데이터가 url을 통해 전달된다.
+		ㄴ www.google.com?menu="피자"
+	ㅁ get 방식에서 query string을 전달하는 방식이다.
+		ㄴ ? : Query string 구분, & : 여러 쌍의 데이터 전달
+ㅁ Javascript event 처리
+	ㅁ onclick : form 요소에 마우스 클릭을 하였을때 발생하는 이벤트
+	ㅁ onchange : form 요소의 value가 변경되었을때 발생하는 이벤트
+	ㅁ onsubmit return true(function()) : form 전송시 발생하는 이벤트, return false시 전송하지 않는다.
+	ㅁ onkeyup : 키보드의 키를 눌렀다가 뗄 때 발생하는 이벤트
+	
+ㅁ JSP
+	ㅁ Java에서 제공하는 template engine, view 기술의 일종
+	ㅁ 웹페이지를 동적으로 생성하기 위한 기술
+		* WAS(Servelt/JSP, 동적으로 html-javscript-css로 구성된 html문서 정보를 HttpResponseBody 영역으로 전달)
+			ㄴ html/javscript/css를 해석하여 화면에 반영
+	※ javascript 상에서의 jsp 기술
+		alert("<%=age%>");
+			ㄴ 일반 문자열로 생각하고 처리
+			ㄴ javscript 자체는 client browser에서 해석, jsp는 server에서 미리 실행되어 문자열로 반환
+			ㄴ 즉 위의 <%=age%>는 미리 문자열로 반환되어, client에게 전달된다.
+	※ DOM 개념도 같이 정리
+		ㄴ Javscript DOM, javscript를 기반으로 웹페이지 element를 제어하기위한 프로그래밍 인터페이스.
+		ㄴ Javascript method를 제공하는 최상위 object 계층의 model이다.

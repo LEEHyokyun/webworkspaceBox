@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>onchange unit test</title>
+</head>
+<body>
+<form>
+<select name="subway id="subway" onchange="testChange()">
+	<option value="">호선</option>
+	<option value="1">1호선</option>
+	<option value="2">2호선</option>
+</select>
+</form>
+<script type="text/javascript">
+/*
+ * javascript onchange event는 value가 변경되었을때 발생한다.
+ */
+	function testChange(){
+		alert("change event occured!");
+	}
+</script>
+</body>
+</html>
