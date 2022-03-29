@@ -12,6 +12,7 @@
 	index.jsp -> RedirectServlet -->(redirect) --> redirect-result.jsp
  --%>
 <ul>
+	<li><a href="ForwardServlet">forward</a></li>
 	<li><a href="RedirectServlet">redirect</a></li>
 </ul>
 <image src="images/forward-redirect-이동방식.png">

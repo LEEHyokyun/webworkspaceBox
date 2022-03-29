@@ -45,4 +45,4 @@
 		ㄴ 최초 1번 실행후, 재동작하지 않는다.
 	ㅁ 서버 상태변경(insert, update, delete 등)에 적합한 이동 방식
 
-※ 재동작하느냐(forward), 재동작하지않느냔(redirect)
+※ 재동작하느냐(forward), 재동작하지않느냐(redirect)

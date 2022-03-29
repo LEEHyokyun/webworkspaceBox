@@ -8,5 +8,6 @@
 </head>
 <body bgcolor="yellow">
 	redirect result page입니다.
+	 컨트롤러가 저장한 정보 : <%=request.getAttribute("productInfo") %><br>
 </body>
 </html>

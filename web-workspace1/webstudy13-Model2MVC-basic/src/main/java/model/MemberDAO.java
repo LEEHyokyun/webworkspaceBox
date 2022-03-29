@@ -63,6 +63,7 @@ public class MemberDAO {
 			
 			if(rs.next()) {
 				vo = new MemberVO(id, rs.getString(1), rs.getString(2));
+				System.out.println(vo);
 			}
 			
 		}finally {
