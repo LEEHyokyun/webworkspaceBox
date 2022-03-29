@@ -1,0 +1,9 @@
+ㅁ Singleton Design Pattern
+	ㅁ 시스템에서 단 하나의 객체만 생성하여 운용하겠다가 핵심.
+		* FindServlet, AllListServelt 등, ProductDAO 객체를 요청시마다 반복적으로 생성하여 내부적으로 복잡해진다.
+		* Singleton의 핵심은, 요청을 할때마다 반복해서 servlet이 DAO객체를 생성하는 것이 아닌, DAO객체를 "한번만 생성하여 공유하는 것"이다.
+	ㅁ public class CompanyDAO..
+		ㄴ 1) 외부 클래스에서 객체생성을 막는다 -> private
+		ㄴ 2) 이후 생성된 (static 메소드를 통해생성한) 생성자 객체를 공유하게 되며
+		ㄴ 3) meta space에 적재된 생성자 객체를 통해, CompanyDAO 객체를 생성하지 않아도 해당 객체를 공유할 수 있게 된다.
+	
