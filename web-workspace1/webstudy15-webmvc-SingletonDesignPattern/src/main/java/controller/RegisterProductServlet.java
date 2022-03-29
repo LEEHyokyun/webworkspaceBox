@@ -27,13 +27,12 @@ public class RegisterProductServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		//response.setContentType("text/html;charset=utf-8");
 		
-		ProductDAO dao = new ProductDAO();
 		String name = request.getParameter("name");
 		String maker = request.getParameter("maker");
 		int price = Integer.parseInt(request.getParameter("price"));
 		
 		try {
-			dao.register(new ProductVO(name, maker, price));		
+			ProductDAO.getInstance().register(new ProductVO(name, maker, price));		
 			response.sendRedirect("register-result.jsp");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

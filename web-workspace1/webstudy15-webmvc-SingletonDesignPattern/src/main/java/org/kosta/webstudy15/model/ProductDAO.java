@@ -10,6 +10,18 @@ import java.util.ArrayList;
 import model.common.DBInfo;
 
 public class ProductDAO {
+	//class loading시 instance 변수에 객체 주소값이 저장됨
+	private static ProductDAO instance = new ProductDAO();
+	
+	private ProductDAO() {
+		System.out.println("ProductDAO 생성되었습니다.");
+	}
+	
+	//외부에서 현 객체를 이용할 수 있도록 getInstance() method 생성
+	public static ProductDAO getInstance() {
+		return instance;
+	}
+	
 	public void closeAll(PreparedStatement pstmt, Connection con) throws SQLException {
 		if(pstmt != null)
 			pstmt.close();

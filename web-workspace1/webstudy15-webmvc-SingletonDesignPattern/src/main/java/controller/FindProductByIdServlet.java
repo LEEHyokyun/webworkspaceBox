@@ -21,11 +21,10 @@ public class FindProductByIdServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		ProductDAO dao = new ProductDAO();
 		String id = request.getParameter("productId");
 
 		try {
-			ProductVO vo = dao.findProductById(id);
+			ProductVO vo = ProductDAO.getInstance().findProductById(id);
 			if (vo != null) {
 				request.setAttribute("product", vo);
 				request.getRequestDispatcher("findbyid-success.jsp").forward(request, response);

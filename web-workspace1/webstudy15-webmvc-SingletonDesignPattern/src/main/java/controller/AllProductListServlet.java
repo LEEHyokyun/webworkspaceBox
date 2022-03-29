@@ -26,11 +26,10 @@ public class AllProductListServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		ProductDAO dao = new ProductDAO();
 		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
 		
 		try {
-			list = dao.getAllProductList();
+			list = ProductDAO.getInstance().getAllProductList();
 			request.setAttribute("list", list);
 			request.getRequestDispatcher("product-list.jsp").forward(request, response);
 		} catch (SQLException e) {
