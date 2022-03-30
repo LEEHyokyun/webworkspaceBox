@@ -1,0 +1,48 @@
+ㅁ UML과 UseCase Diagram
+UML : Unified Modeling Language -> application 분석 설계 
+
+UseCase Diagram : 요구분석을 위한 UML ,시스템에 요구되는 기능을 사용자 관점에서 나타낸 다이어그램 
+​Use Case : 사용자 관점의 기능 단위 ( 서비스 단위 ) ( ex - 도서검색 , 도서대여 , 로그인 ) 
+Actor : 시스템 외부에 존재하면서 시스템과 상호작용하는 개체 ( ex - 고객, 관리자 ) 
+
+<<include>>
+기본 Use Case가 실행되기 위해서는 반드시 다른 특정 Use Case의 행위를 포함해야 한다는 것을 의미 
+ex) 책대여Use Case -------> 회원인증Use Case 
+
+​<<extend>>
+Use Case 가 특정 Use Case 에 정의된 행위로 선택적으로 추가 확장 될 수 있다는 것을 나타냄 
+ex) 책대여Use Case <------ 부록CD 대여 Use Case 
+
+Generalization 
+기능의 일반화, 도서정보검색 <- 과학도서검색, 문학도서검색,...
+ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use Case 의 일반화된 Use Case 이다
+
+ㅁ project requirements
+	ㅁ Usecase Diagram
+		ㅁ 요구사항(기술명세서, Functional concepts)
+			ㅁ 비로그인
+			* 비로그인 상태에서 회원 아이디로 정보 검색을 할 수 있다.
+				ㄴ 아이디에 따른 회원명과 주소
+			* 비로그인 상태에서 회원 가입이 가능하다.
+			* 회원가입시에는 반드시 아이디 중복확인을 거치고, 중복된 아이디가 아닐때 회원가입 진행
+			* 선택적으로 고객이 원한다면 자신의 프로필 이미지를 업로드 할 수 있도록 한다.
+			ㅁ 로그인
+			* 회원일 경우에는 로그인, 로그아웃이 가능하다.
+			* 회원은 주소로 다른 회원의 정보를 검색할 수 있다.
+			* 회원은 자신의 회원정보를 수정할 수 있다(아이디를 제외한 비밀번호, 이름, 주소 수정 가능)
+	ㅁ agile process
+		1) 아이템 기획 - 프로젝트 목표, 시스템 개요(개괄요약), 팀빌딩, 프로젝트 일정, 마일스톤, 개발방법론(형상괸리/협업도구)
+		2) 요구분석 - usecase diagram
+		3) 설계 - UML class diagram, ERD, UI 설계
+		4) 구현 - usecase별 업무분담, usecase별 구현순서
+		5) 1차개발 -> 2차개발 (sprint)
+
+ㅁ Member 회원관리 구현
+	가) 아이디로 회원 검색
+		* index.jsp - FindMemberByIdServlet - MemberDAO - DB
+		* forward, findbyid-ok.jsp / findbyid-fail.jsp
+	나) 로그인, 로그아웃
+	다) 주소로 회원검색
+	라) 회원정보수정
+	마) 회원가입 (아이디 중복확인)
+	
