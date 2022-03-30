@@ -1,0 +1,43 @@
+ㅁ MVC Pattern에서의 session
+	ㅁ Session : 사용자 상태 정보를 서버측에 저장
+	ㅁ jsp에서의 session 이용
+		* jsp에서는 기본적으로 session 사용 가능, getSession() / getSessionId()
+			ㄴ session이 존재한다면 그대로 유지, 원래 객체 반환
+			ㄴ session이 존재하지않는다면 새로운 객체 생성
+		* web container에 의해 jsp가 java class로 생성시, session 변수에 getSession 메서드를 통해 세션 객체를 할당
+		* singleton pattern에서, getSession은 기존 세션이 없다면 새로 생성, 있다면 기존 세션을 반환
+		* web container에 의해, jsp>java 생성 / session 생성코드 삽입(즉, 기본적으로 session객체 생성)
+			ㄴ session 객체를 생성하는 것은, getSession, getSessionId 등이 있다.
+			ㄴ jsp는 기본적으로 session을 사용할 수 있도록 구성(별도 만들 필요가 없음)
+			ㄴ jsp 내장객체
+		* session 객체 자체는 존재, 다만 이 객체에 정보를 저장해야 getAttribute 가능.
+			ㄴ session은 edge, chrome 등 browser가 켜져있다면 종류에 상관없이 생존.
+	ㅁ session의 유효기간
+		ㄴ 서버에 설정한 session timeout(web.xml)에서 시간내 재접속을 안하거나, 로그아웃을 한 경우
+		ㄴ 브라우저를 종료할 경우
+	ㅁ sesion의 유효범위
+		ㄴ jsp에서 getSession을 통해 만들어진 session은 프로그램 모든 요소가 공유할 수 있는 하나의 자원이다.
+		
+
+ㅁ jsp에서 지원하는 객체(jsp 내장객체)
+	request : HttpServletRequest
+	response : HttpServletResponse
+	config ; ServletConfig
+	session : HttpSession
+	application : ServletContext
+		ㄴ 정보공유 범위 : Req < Session < application(ServletContext)
+			* req: res 전달전까지
+			* sess : 세션유효기간 조건 전까지
+				ㄴ timeout전까지 요청이 없을 경우, 브라우저를 끌 경우, invalidate() 전까지
+			* application : web application 종료전까지
+
+ㅁ session 자동생성방지
+	ㅁ <%@ page language="java" ....... session="false">
+		* class 파일 확인시 pageContext의 getSesion()이 기술되어있지 않다(session 선언이 없어 객체생성안됨)
+		
+ㅁ web mvc에서의 Controller(Servlet) / View(JSP)에서의 session 사용
+	* redirect : req가 아닌, session 정보를 공유
+	mvc-login.jsp -- req --> LoginServlet(servlet에서 id/pw 일치시 로그인 성공 아니면 실패)
+			<post : 정보노출불가> <redirect> -- 로그인 성공시 session 정보를 얻어오고 인증객체정보전달 
+								   그 후 view(jsp) 이동..
+						
