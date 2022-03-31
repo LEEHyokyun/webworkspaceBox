@@ -15,7 +15,7 @@
 	<div class="container">
 		<h3>WebMVC 회원관리 - 회원정보가 검색되었습니다.</h3>
 		<br><br>
-		<a href="index.jsp">Home</a>
+		<a href="index.jsp">Home</a><br>
 		회원 아이디 : <%=vo.getId() %><br>
 		회원 이름 : <%=vo.getName() %><br>
 		회원 주소 : <%=vo.getAddress() %><br>

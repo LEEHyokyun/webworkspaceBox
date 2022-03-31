@@ -41,8 +41,31 @@ ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use
 	가) 아이디로 회원 검색
 		* index.jsp - FindMemberByIdServlet - MemberDAO - DB
 		* forward, findbyid-ok.jsp / findbyid-fail.jsp
-	나) 로그인, 로그아웃
+	나1) 로그인, 로그아웃
+		* index.jsp - LoginServlet - MemberDAO - DB
+									  login(id, password) : MemberVO
+		* 로그인 실패시 : login-fail.jsp
+		* 로그아웃 : index.jsp - LogoutServlet(Session 무효화) - index.jsp 
+	나2) url 상에서 LoginServlet/LogoutServlet 등 입력하여 로그인/로그아웃을 하는 것은 바람직하지 않다.
+		* 기본적으로 Post방식으로 변경한다.
+			ㄴ 즉 location.href 방식 제거.
+			1) configure > convert to tern project 
+			2) href에서 onclick 속성을 추가하며, 이때 함수가 발동하면서 최종적으로 post형태로 LogoutServlet으로 이동(해당 id의 form양식을 보내주기위해 id를 설정)
+				ㄴ servlet에게 post 방식으로 보내준다(servlet 측을 doPost로 설정)
+				ㄴ url을 통한 로그아웃 방지
 	다) 주소로 회원검색
 	라) 회원정보수정
 	마) 회원가입 (아이디 중복확인)
 	
+ㅁ MVC pattern과 encapsulation
+	- encapsulation : 인터페이스와 정보은닉
+		> 사용법은 공유하고 내부 로직은 은닉
+	- MVC구조에서는 model 쪽이 capsule화, controller와 view는 client쪽에 가깝다.
+		> request 분석은 controller(input)
+		> client에게 최종적인 전달 및 출력은 view(response, output)
+
+ㅁ Http status code
+	200 정상수행
+	404 자원없음
+	405 method 지원없음
+	500 서버오류(메소드, 문법)
