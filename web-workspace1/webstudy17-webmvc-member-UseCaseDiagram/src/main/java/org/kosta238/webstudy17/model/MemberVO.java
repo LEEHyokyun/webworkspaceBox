@@ -1,6 +1,13 @@
 package org.kosta238.webstudy17.model;
 
-public class MemberVO {
+import java.io.Serializable;
+
+public class MemberVO implements Serializable{
+	/*
+	 * server가 리로드 및 세션객체가 리로드되어도, WAS에서 세션객체의 data를 내부적으로 유지하기 위한 방안 : Serializable
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private String id;
 	private String password;
 	private String name;

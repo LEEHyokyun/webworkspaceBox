@@ -54,7 +54,14 @@ ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use
 				ㄴ servlet에게 post 방식으로 보내준다(servlet 측을 doPost로 설정)
 				ㄴ url을 통한 로그아웃 방지
 	다) 주소로 회원검색
+		* index.jsp - FindMemberListByAddressServlet - MemberDAO - DB
+		                                          <findMemberListByAddress(address) : ArrayList<MemberVO>>
+		                   <forward : findbyaddress-result.jsp>
 	라) 회원정보수정
+		* index,jsp - update-form.jsp(ID를 제외한 패스워드, 이름, 주소제공 및 수정) - UpdateMemberServlet - MemberDAO - DB
+		* post/ redirect
+		* DAO를 통한 수정시 DB와 session 객체 내 정보 모두 수정!
+		* 최종적으로 update-result.jsp에서 보여지는 정보는 session 객체를 참조
 	마) 회원가입 (아이디 중복확인)
 	
 ㅁ MVC pattern과 encapsulation
@@ -64,6 +71,11 @@ ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use
 		> request 분석은 controller(input)
 		> client에게 최종적인 전달 및 출력은 view(response, output)
 
+ㅁ Serializable의 이용
+	* server가 리로드 및 세션객체가 리로드되어도, 세션객체의 data를 WAS를 통해 내부적으로 유지하기 위한 방안이다.
+	* 이후에는 서버 및 세션객체가 리로드되어도 정보가 유지된다!!
+		ㄴ session data에 한하는 방법이라는 점에 유의.
+	
 ㅁ Http status code
 	200 정상수행
 	404 자원없음

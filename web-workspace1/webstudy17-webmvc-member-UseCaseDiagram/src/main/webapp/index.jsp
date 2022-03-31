@@ -40,6 +40,15 @@
 				document.getElementById("LogoutForm").submit();
 			}
 		</script>
+		<br><br>
+		<%--주소를 통한 회원검색 --%>
+		<form method="get" action="FindMemberListByAddressServlet">
+			<input type="text" name="memberAddress" placeholder="주소"><br>
+			<button type="submit">회원정보 검색하기</button><br>
+		</form>
+		
+		<br><br>
+		<a href="update-form.jsp">회원정보 수정하기</a>
 		<%
 		}
 		%>
