@@ -27,6 +27,8 @@
 			<input type="password" name="memberPw" placeholder="비밀번호" required="required"><br>
 			<button type="submint">로그인</button>
 		</form>
+		<br><br>
+		<a href="register-form.jsp">회원가입</a>
 		<%
 		}else{%>
 		<!-- 로그인 상태일 경우, 즉 session에 로그인 정보(mvo 객체)가 있을 경우 -->
@@ -48,7 +50,7 @@
 		</form>
 		
 		<br><br>
-		<a href="update-form.jsp">회원정보 수정하기</a>
+		<a href="UpdateFormServlet">회원정보 수정하기</a>
 		<%
 		}
 		%>

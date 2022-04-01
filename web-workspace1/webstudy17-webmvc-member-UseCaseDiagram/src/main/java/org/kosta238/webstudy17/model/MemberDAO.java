@@ -139,4 +139,28 @@ public class MemberDAO {
 		
 		
 	}
+
+	public void register(MemberVO vo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		
+		try {
+			con = getConnection();
+			String sql = "INSERT INTO member(id, password, name, address) VALUES(?, ?, ?, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getId());
+			pstmt.setString(2, vo.getPassword());
+			pstmt.setString(3, vo.getName());
+			pstmt.setString(4, vo.getAddress());
+			int result = pstmt.executeUpdate();
+			
+			System.out.println(result+" Columns have been updated");
+			
+			
+		}finally {
+			closeAll(pstmt, con);
+		}
+		
+		
+	}
 }

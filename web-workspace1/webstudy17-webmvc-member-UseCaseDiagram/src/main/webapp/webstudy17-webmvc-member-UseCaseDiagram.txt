@@ -57,12 +57,16 @@ ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use
 		* index.jsp - FindMemberListByAddressServlet - MemberDAO - DB
 		                                          <findMemberListByAddress(address) : ArrayList<MemberVO>>
 		                   <forward : findbyaddress-result.jsp>
-	라) 회원정보수정
+	라1) 회원정보수정
 		* index,jsp - update-form.jsp(ID를 제외한 패스워드, 이름, 주소제공 및 수정) - UpdateMemberServlet - MemberDAO - DB
 		* post/ redirect
 		* DAO를 통한 수정시 DB와 session 객체 내 정보 모두 수정!
 		* 최종적으로 update-result.jsp에서 보여지는 정보는 session 객체를 참조
+	라2) 회원정보 수정시 session timeout 오류 해결(Nullpointer exception)	
+		* index > UpdateFormServlet - (로그인시) update-result.jsp / (비로그인/세션타임아웃) index.jsp
 	마) 회원가입 (아이디 중복확인)
+		* index > registerFormServlet > MemberDAO(register(MemberVO) - DB) > register-result.jsp
+		* post / redirect
 	
 ㅁ MVC pattern과 encapsulation
 	- encapsulation : 인터페이스와 정보은닉
