@@ -42,14 +42,17 @@ public class UpdateMemberServlet extends HttpServlet {
 			MemberDAO.getInstance().updateMember(vo);
 			
 			HttpSession session = request.getSession(false);
-			if(session != null)
+			if(session != null) {
 				session.setAttribute("mvo", vo);
+				response.sendRedirect("update-result.jsp");
+			}else if(session == null || session.getAttribute("mvo") ==null)
+				response.sendRedirect("index.jsp");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		response.sendRedirect("update-result.jsp");
+		
 	}
 
 }

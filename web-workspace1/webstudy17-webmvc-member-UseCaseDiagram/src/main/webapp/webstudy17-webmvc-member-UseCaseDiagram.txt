@@ -64,6 +64,9 @@ ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use
 		* 최종적으로 update-result.jsp에서 보여지는 정보는 session 객체를 참조
 	라2) 회원정보 수정시 session timeout 오류 해결(Nullpointer exception)	
 		* index > UpdateFormServlet - (로그인시) update-result.jsp / (비로그인/세션타임아웃) index.jsp
+	라3) 로그인후 회원정보 수정시 sesion timeout 오류 해결
+		* update-form.jsp 상태에서 수정시 session 이슈 해결
+		* UpdateMemberServlet에서 세션정보를 체크하고, 세션정보가 있을 경우에만 redirect 실행.
 	마) 회원가입 (아이디 중복확인)
 		* index > registerFormServlet > MemberDAO(register(MemberVO) - DB) > register-result.jsp
 		* post / redirect
