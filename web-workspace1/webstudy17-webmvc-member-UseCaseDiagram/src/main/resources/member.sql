@@ -7,3 +7,7 @@ SELECT name, address FROM member WHERE id = 'spring' and password = 'abcd';
 SELECT name, address FROM member WHERE id = 'spring' and password = '1';
 
 COMMIT
+
+--아이디 존재 유무를 판단
+SELECT COUNT(*) FROM member WHERE id='java';
+SELECT COUNT(*) FROM member WHERE id='java2';

@@ -163,4 +163,29 @@ public class MemberDAO {
 		
 		
 	}
+
+	public boolean checkId(String id) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			con = getConnection();
+			String sql = "SELECT COUNT(*) FROM member WHERE id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				if(rs.getInt(1)==0)
+					return false;
+			}
+			
+			return true;
+			
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+
+	}
 }

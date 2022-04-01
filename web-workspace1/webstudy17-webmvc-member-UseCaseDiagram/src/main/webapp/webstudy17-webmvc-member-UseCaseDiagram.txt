@@ -70,7 +70,17 @@ ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use
 	마) 회원가입 (아이디 중복확인)
 		* index > registerFormServlet > MemberDAO(register(MemberVO) - DB) > register-result.jsp
 		* post / redirect
-	
+		* index.jsp -- register.jsp -- 중복확인 -- CheckIdServlet -- MemberDAO(checkId)
+			ㄴ 존재시 사용불가, 존재하지 않으면 사용가능
+		* get, forward 사용 - 위에서 존재한다면 사용불가(check-id-fail.jsp), 존재하지 않는다면 사용가능(check-id-ok.jsp)
+			ㄴ 본창의 id text 지우고, 포커스
+			ㄴ hidden checkFlag에 아이디 할당
+	※ 아이디 중복 과정 개략도
+		1) 입력 > 중복확인 > 자체 javascript function 확인
+		2) id 공란 먼저 확인
+		3) id가 공란이 아닐때, 그때 servlet으로 get 이동(querystring으로 id 전달)
+		4) servlet에서 DA를 통한 중복확인, 중복시(id생성불가) fail.jsp / 미중복(id생성가능) ok.jsp
+		5) 각각의 jsp에서 view 제공
 ㅁ MVC pattern과 encapsulation
 	- encapsulation : 인터페이스와 정보은닉
 		> 사용법은 공유하고 내부 로직은 은닉
