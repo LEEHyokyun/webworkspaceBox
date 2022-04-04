@@ -1,0 +1,100 @@
+ㅁ UML과 UseCase Diagram
+UML : Unified Modeling Language -> application 분석 설계 
+
+UseCase Diagram : 요구분석을 위한 UML ,시스템에 요구되는 기능을 사용자 관점에서 나타낸 다이어그램 
+​Use Case : 사용자 관점의 기능 단위 ( 서비스 단위 ) ( ex - 도서검색 , 도서대여 , 로그인 ) 
+Actor : 시스템 외부에 존재하면서 시스템과 상호작용하는 개체 ( ex - 고객, 관리자 ) 
+
+<<include>>
+기본 Use Case가 실행되기 위해서는 반드시 다른 특정 Use Case의 행위를 포함해야 한다는 것을 의미 
+ex) 책대여Use Case -------> 회원인증Use Case 
+
+​<<extend>>
+Use Case 가 특정 Use Case 에 정의된 행위로 선택적으로 추가 확장 될 수 있다는 것을 나타냄 
+ex) 책대여Use Case <------ 부록CD 대여 Use Case 
+
+Generalization 
+기능의 일반화, 도서정보검색 <- 과학도서검색, 문학도서검색,...
+ex) 도서 검색 Use Case 은 신착도서검색 Use Case , 간행물검색 Use Case 의 일반화된 Use Case 이다
+
+ㅁ project requirements
+	ㅁ Usecase Diagram
+		ㅁ 요구사항(기술명세서, Functional concepts)
+			ㅁ 비로그인
+			* 비로그인 상태에서 회원 아이디로 정보 검색을 할 수 있다.
+				ㄴ 아이디에 따른 회원명과 주소
+			* 비로그인 상태에서 회원 가입이 가능하다.
+			* 회원가입시에는 반드시 아이디 중복확인을 거치고, 중복된 아이디가 아닐때 회원가입 진행
+			* 선택적으로 고객이 원한다면 자신의 프로필 이미지를 업로드 할 수 있도록 한다.
+			ㅁ 로그인
+			* 회원일 경우에는 로그인, 로그아웃이 가능하다.
+			* 회원은 주소로 다른 회원의 정보를 검색할 수 있다.
+			* 회원은 자신의 회원정보를 수정할 수 있다(아이디를 제외한 비밀번호, 이름, 주소 수정 가능)
+	ㅁ agile process
+		1) 아이템 기획 - 프로젝트 목표, 시스템 개요(개괄요약), 팀빌딩, 프로젝트 일정, 마일스톤, 개발방법론(형상괸리/협업도구)
+		2) 요구분석 - usecase diagram
+		3) 설계 - UML class diagram, ERD, UI 설계
+		4) 구현 - usecase별 업무분담, usecase별 구현순서
+		5) 1차개발 -> 2차개발 (sprint)
+
+ㅁ Member 회원관리 구현
+	가) 아이디로 회원 검색
+		* index.jsp - FindMemberByIdServlet - MemberDAO - DB
+		* forward, findbyid-ok.jsp / findbyid-fail.jsp
+	나1) 로그인, 로그아웃
+		* index.jsp - LoginServlet - MemberDAO - DB
+									  login(id, password) : MemberVO
+		* 로그인 실패시 : login-fail.jsp
+		* 로그아웃 : index.jsp - LogoutServlet(Session 무효화) - index.jsp 
+	나2) url 상에서 LoginServlet/LogoutServlet 등 입력하여 로그인/로그아웃을 하는 것은 바람직하지 않다.
+		* 기본적으로 Post방식으로 변경한다.
+			ㄴ 즉 location.href 방식 제거.
+			1) configure > convert to tern project 
+			2) href에서 onclick 속성을 추가하며, 이때 함수가 발동하면서 최종적으로 post형태로 LogoutServlet으로 이동(해당 id의 form양식을 보내주기위해 id를 설정)
+				ㄴ servlet에게 post 방식으로 보내준다(servlet 측을 doPost로 설정)
+				ㄴ url을 통한 로그아웃 방지
+	다) 주소로 회원검색
+		* index.jsp - FindMemberListByAddressServlet - MemberDAO - DB
+		                                          <findMemberListByAddress(address) : ArrayList<MemberVO>>
+		                   <forward : findbyaddress-result.jsp>
+	라1) 회원정보수정
+		* index,jsp - update-form.jsp(ID를 제외한 패스워드, 이름, 주소제공 및 수정) - UpdateMemberServlet - MemberDAO - DB
+		* post/ redirect
+		* DAO를 통한 수정시 DB와 session 객체 내 정보 모두 수정!
+		* 최종적으로 update-result.jsp에서 보여지는 정보는 session 객체를 참조
+	라2) 회원정보 수정시 session timeout 오류 해결(Nullpointer exception)	
+		* index > UpdateFormServlet - (로그인시) update-result.jsp / (비로그인/세션타임아웃) index.jsp
+	라3) 로그인후 회원정보 수정시 sesion timeout 오류 해결
+		* update-form.jsp 상태에서 수정시 session 이슈 해결
+		* UpdateMemberServlet에서 세션정보를 체크하고, 세션정보가 있을 경우에만 redirect 실행.
+	마) 회원가입 (아이디 중복확인)
+		* index > registerFormServlet > MemberDAO(register(MemberVO) - DB) > register-result.jsp
+		* post / redirect
+		* index.jsp -- register.jsp -- 중복확인 -- CheckIdServlet -- MemberDAO(checkId)
+			ㄴ 존재시 사용불가, 존재하지 않으면 사용가능
+		* get, forward 사용 - 위에서 존재한다면 사용불가(check-id-fail.jsp), 존재하지 않는다면 사용가능(check-id-ok.jsp)
+			ㄴ 본창의 id text 지우고, 포커스
+			ㄴ hidden checkFlag에 아이디 할당
+	※ 아이디 중복 과정 개략도
+		1) 입력 > 중복확인 > 자체 javascript function 확인
+		2) id 공란 먼저 확인
+		3) id가 공란이 아닐때, 그때 servlet으로 get 이동(querystring으로 id 전달)
+		4) servlet에서 DA를 통한 중복확인, 중복시(id생성불가) fail.jsp / 미중복(id생성가능) ok.jsp
+		5) 각각의 jsp에서 view 제공
+ㅁ MVC pattern과 encapsulation
+	- encapsulation : 인터페이스와 정보은닉
+		> 사용법은 공유하고 내부 로직은 은닉
+	- MVC구조에서는 model 쪽이 capsule화, controller와 view는 client쪽에 가깝다.
+		> request 분석은 controller(input)
+		> client에게 최종적인 전달 및 출력은 view(response, output)
+
+ㅁ Serializable의 이용
+	* server가 리로드 및 세션객체가 리로드되어도, 세션객체의 data를 WAS를 통해 내부적으로 유지하기 위한 방안이다.
+	* 이후에는 서버 및 세션객체가 리로드되어도 정보가 유지된다!!
+		ㄴ session data에 한하는 방법이라는 점에 유의.
+	
+ㅁ Http status code
+	200 정상수행
+	404 자원없음
+	405 method 지원없음
+	500 서버오류(메소드, 문법)

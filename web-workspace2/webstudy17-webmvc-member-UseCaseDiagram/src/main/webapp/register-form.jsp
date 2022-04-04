@@ -27,9 +27,10 @@
 			function checkRegForm(){
 				//비밀번호 일치시 제출
 				
-				if(document.getElementById("password").value == document.getElementById("confirmPassword").value){
+				if(document.getElementById("password").value != document.getElementById("confirmPassword").value){
 					alert("비밀번호가 일치하지 않습니다.");
 					return false;
+				}
 				if(document.getElementById("id").value != document.getElementById("checkFlag").value){
 					alert("아이디 중복체크를 진행하지 않았습니다.");
 					return false;
