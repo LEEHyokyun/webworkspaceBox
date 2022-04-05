@@ -15,6 +15,8 @@ public class HandlerMapping {
 			controller = new RegisterCarController();
 		}else if(command.equals("findAllCarList")) {
 			controller = new FindAllCarListController();
+		}else if(command.equals("updateCar")) {
+			controller = new UpdateCarController();
 		}
 		
 		return controller;

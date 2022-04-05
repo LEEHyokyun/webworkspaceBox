@@ -62,11 +62,13 @@
 				ㄴ Controller 연결, 즉 HandlerMapping를 분리할 필요가 있다!
 				ㄴ Module화
 				* key point : HandlerMapping에서의 컨트롤러 객체 생성!
-				
 			5) HandlerMapping에서 command에 따라 자동적으로 객체 생성을 할 수 있는 방안?
 				* 개별 controller 생성을 효율적으로 하기 위한 로직 수정(refactoring)
-				* 
-				
+				* java Reflection API를 이용하여, 컨트롤러 객체를 런타임에 자동 생성한다.
+					ㄴ Reflection : Runtime 시점에 동적으로 객체를 생성 및 제어할 수 있도록 지원하는 "기술"
+				* 컨트롤러 및 Service가 추가/확장되어도, HandlerMapping에서는 추가 필요없이, 자동적으로 해당 객체 생성 및 실행된다.
+					ㄴ 결합도 감소!
+					
 ㅁ Web MVC와의 연결
 	ㅁ Web MVC에서 Front Controller Design pattern을 적용한다면
 		* FrontControllerServlet : client 요청에 대한 공통정책(인증, 예외처리, 인코딩 등)
