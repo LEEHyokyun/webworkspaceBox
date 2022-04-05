@@ -1,0 +1,87 @@
+ㅁ front/pattern
+	ㅁ front - client와 맞닿는 영역(부분)
+	ㅁ pattern - 재사용이 가능한 설계 패턴
+
+ㅁ Front Controller pattern 
+	ㅁ 다수의 client는 반드시 FrontControllerServlet을 거친다.
+		ㄴ 하나의 진입점
+		ㄴ 기존 web MVC : 1client -> 1Servlet
+	ㅁ 웹 어플리케이션 서비스의 공통 정책을 일관성있게 효과적으로 처리가능.
+		ㄴ 인코딩 처리, 보안(인증/인가), 예외처리, 데이터 수집, 마케팅 정책
+		ㄴ 코드 중복 최소화 가능
+	ㅁ FrontController 적용 전 WebMVC 구조
+		* client 1 -- 검색요청 -- FindMemberByIdServelt
+	ㅁ FrontController 적용 후 WebMVC 구조
+		* client 1,2,.. -- 검색요청 -- FrontControllerServlet -- 
+			ㄴ 다양한 요청에 대해 하나의 Servlet이 처리한다.
+			ㄴ 이 요청의 구분을 위해서는 form의 hidden tag를 이용, command name을 통한 value 전송
+				ㄴ 최종적으로는 FrontControllerServlet이 이를 인지
+			ㄴ QueryString 방식을 이용하는 방식도 활용가능
+	ㅁ FrontControllerServlet 구조
+		ㅁ doDispatch()
+		ㅁ doGet(){
+				doDispatch();
+			}
+		ㅁ doPost(){
+			//encoding
+			doDispatch();
+			}
+		※ view로 부터 client 요청값(command)를 받고, command value에 따라 doDispatch에서 요청을 처리한다.
+		※ 실질적인 로직처리는 doDispatch에서 진행하며, doPost나 doGet은 전달하는 역할만 한다.
+	ㅁ doDistapatch의 과잉 억제(분기처리 간결화)방안
+		ㅁ client의 다양한 요청을 처리하기위해 로직개선
+			* client 요청구분 : form submit을 통해 제출된 command value
+			1) 각 요청별 메서드 분할
+				* doDispatch( if... ) -> doDispatch()에서 findbycar, register 등의 메서드를 호출하는 방식.
+				ㄴ 그러나 이 방법 또한 결국 FrontControllerServlet에서 모두 처리하여 과부하, 생산성 및 유지보수성 저하.
+			2) 그 분할한 개별적인 메서드들을 별도의 클래스로 분화, 독립적인 단위로 개발 및 운영하도록 변경
+				* client -- 검색 -- FrontController -- FindByNoController -- Model.
+				* client -- 등록 -- FrontController -- RegisterServlet -- Model.
+					ㄴ FrontController에서 분할!
+				※ key point : 분할된 controller servlet을 사용하기위한 계층구조 생성
+					ㄴ 각 class는 req, res인자를 넘겨받으며 최종적으로는 view jsp로 전달한다.
+				ㄴ 그러나 이 방법 결국, 객체생성 및 메소드 생성에서의 반복과 과부하가 발생한다.
+			3) 계층 구조를 통한 다형성 적용, 즉 개별적인 Controller에 대해 계층구조화하여 하나의 소통방식으로 객체 동작
+				ㅁ	개별 Controller 들을 계층구조화하여 다형성을 지원하도록 설계, 즉 Servlet 측에서는 하나의 소통방식으로 controller 및 객체들을 동작한다.
+					ㄴ  FrontControllerServlet이 개별적인 객체를 직접 호출하는 기존 형태에서 개선  
+				* 기존 방식에서는 Dispatch에서 객체생성 및 해당 메소드를 사용
+					ㄴ controller.findCarByNo(req, res).
+					ㄴ 결국 결합도가 높은 상태(해당 메소드 이름 등 바뀌면 사용X)
+				* Controller Interface 정의
+					ㄴ abstract method: public Stringexecute(HttpServletRequest, request, HttpServletResponse response){}
+					ㄴ 모든 개별 controller는 interface를 통해 구현, 추상 메서드 execute()를 자신에 맞게 정의
+					ㄴ return하는 정보는 client에게 응답하기 위한 view 정보
+						ㄴ forward 방식일 경우 return "findbyno-ok.jsp"
+						ㄴ redirect 방식일 경우 return "redirect:registercar-result.jsp"	
+						* Spring framework에서도 동일하게 사용!
+				* client -- 검색 -- FrontControllerServlet -- controller(Interface) - FindByCarController(DAO) : path 
+					ㄴ controller는 execute 하나의 인터페이스로만 동작, path(jsp)를 return 받는다.
+						* forward : jsp그대로
+						* redirect : redirect: 접두, substring 등 이용
+			4) 결합도를 낮추고 재사용성을 높인 형태 - HandlerMapping의 분리
+				ㄴ Controller 연결, 즉 HandlerMapping를 분리할 필요가 있다!
+				ㄴ Module화
+				* key point : HandlerMapping에서의 컨트롤러 객체 생성!
+			5) HandlerMapping에서 command에 따라 자동적으로 객체 생성을 할 수 있는 방안?
+				* 개별 controller 생성을 효율적으로 하기 위한 로직 수정(refactoring)
+				* java Reflection API를 이용하여, 컨트롤러 객체를 런타임에 자동 생성한다.
+					ㄴ Reflection : Runtime 시점에 동적으로 객체를 생성 및 제어할 수 있도록 지원하는 "기술"
+				* 컨트롤러 및 Service가 추가/확장되어도, HandlerMapping에서는 추가 필요없이, 자동적으로 해당 객체 생성 및 실행된다.
+					ㄴ 결합도 감소!
+			6) client 측에서 command 정보를 hidden 혹은 querystring 형식으로 전달하는 단점을 보완
+				* url pattern으로 컨트롤러 명을 명시하여 일괄 전달, 별도로 hidden으로 command를 전달할 필요 없다.
+				* ex) form action="RegisterCarController.do">
+					ㄴ *.do > FrontControllerServlet에서 처리
+					ㄴ 보다 간결한 방식으로 요청이 가능하다.
+			
+ㅁ Web MVC와의 연결
+	ㅁ Web MVC에서 Front Controller Design pattern을 적용한다면
+		* FrontControllerServlet : client 요청에 대한 공통정책(인증, 예외처리, 인코딩 등)
+		* HandlerMapping : Factory 객체, 개별 컨트롤러 객체 생성 전담하여 결합도 최소화
+		* Controller Interface : 개별 컨트롤러 객체의 상위 인터페이스, 캡슐화 및 다형성 지원을 통한 결합도 최소화
+			ㄴ 개별 컨트롤러 동작을 알고 있지 않아도, 하나의 소통방식으로 동작 가능
+		* 개별 controller (구현 객체) : 실제 client의 요청을 처리하는 로직
+		
+ㅁ refactoring 
+	ㅁ 결과 변동없이 코드의 구조를 재정의
+	ㅁ 코드구조개선을 통한 생산성 향상 및 유지보수 향상, 가독성 향상

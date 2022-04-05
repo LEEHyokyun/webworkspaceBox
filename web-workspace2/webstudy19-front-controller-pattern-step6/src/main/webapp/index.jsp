@@ -4,20 +4,18 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FrontController Design Pattern-5</title>
+<title>FrontController Design Pattern-6</title>
 </head>
 <body>
 <h4>Controller 객체 동적 생성</h4>
 <br>
 <br><br>
-<form action="FrontControllerServlet" method="get">
-	<input type="hidden" name="command" value="FindCarByNoController">
+<form action="FindCarByNoController.do" method="get">
 	<input type="number" name="carNo" placeholder="차번호" required="required">
 	<button type="submit">검색</button>
 </form>
 <br><br>
-<form action="FrontControllerServlet" method="post">
-	<input type="hidden" name="command" value="RegisterCarController">
+<form action="RegisterCarController.do" method="post">
 	<input type="text" name="carInfo" placeholder="차정보" required="required">
 	<button type="submit">등록</button>
 </form>
@@ -28,14 +26,12 @@
 <%--
 	update
  --%>
-<form action="FrontControllerServlet" method="post">
-	<input type="hidden" name="command" value="UpdateCarController">
+<form action="UpdateCarController.do" method="post">
 	<input type="text" name="carInfo" placeholder="차정보" required="required">
 	<button type="submit">수정</button>
 </form>
 <br><br>
-<form action="FrontControllerServlet" method="post">
-	<input type="hidden" name="command" value="DeleteCarController">
+<form action="DeleteCarController.do" method="post">
 	<input type="number" name="carNo" placeholder="차번호" required="required">
 	<button type="submit">삭제</button>
 </form>
