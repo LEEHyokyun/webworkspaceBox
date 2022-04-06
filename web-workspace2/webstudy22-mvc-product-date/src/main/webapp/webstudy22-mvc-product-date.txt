@@ -1,0 +1,11 @@
+ㅁ mvc + FrontController design pattern 에서의 date data type을 활용하여 구축
+	ㅁ model : org.kosta.myproject.model.ProductVO
+				org.kosta.myproject.model.ProductDAO
+		
+		Controller : org.kosta.myproject.controller.FrontControllerServlet
+					  org.kosta.myproject.controller.HandlerMapping
+					  org.kosta.myproject.controller.Controller
+		
+		View : index.jsp
+		
+		src/test/java : 	TestUnitProductDAO(단위 테스트)
