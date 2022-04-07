@@ -1,0 +1,19 @@
+ㅁ EL
+	ㅁ JSP에서 제공하는 스크립트 언어
+	ㅁ 기존 Scriptlet tag의 표현식(<%=%>)의 상향된 언어, ${}의 형태.
+	ㅁ JSP 속성영역(request, session, servletcontext)에 저장된 객체의 property(data)를 출력한다.
+		* EL을 이용한다면, 별도의 import나 object casting 등이 필요없다.
+		* 다양한 연산, 형변환을 지원한다.
+	ㅁ JSTL과 연동할 수 있으며, Model 객체의 get/is(boolean)계열 메소드에만 접근이 가능하다.
+		* ${}을 통해 그대로 객체로부터 data 추출가능하다.
+		* requestScope.fvo.name or fvo.name과 같이, 해당 인스턴스 변수에 직접적인 추출이 가능.
+		* sessionScope.foodVO.name or foodVO.name
+	※ request, session에 동일한 이름으로 data를 추출할 경우, scope를 반드시 명기해주어야 한다.
+		* request, session(scope)를 명기하지 않는다면, request에서 data를 추출한다(그 후 session에서 추출).
+	ㅁ queryString으로 전달된 데이터는 EL의 param 객체를 통해 확보할 수 있다.
+	※ 쿼리스트링에 data가 존재하지 않을 경우
+		* request.getParamter > null
+		* param > 객체가 아예 없으므로 어떤 것도 출력하지 않는다.
+	ㅁ data를 추출하는 것은, 해당 객체내 get/is가 명기된 메소드에 접근하여 해당 data를 추출해오는 것이다.
+		* ex, EL에서 tvo.meesage > tvo객체의 getMessage를 통해 message를 return 받는것.
+		* 이것은 하나의 약속이다.
