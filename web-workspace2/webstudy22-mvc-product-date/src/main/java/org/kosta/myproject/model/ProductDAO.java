@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import model.common.DBInfo;
 
@@ -69,7 +70,7 @@ public class ProductDAO {
 	public void register(ProductVO vo) throws SQLException {
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+
 		try {
 			con = getConnection();
 			String sql = "INSERT INTO mvc_product(id, name, maker, price, regDate) VALUES(mvc_product_seq.nextval, ?, ?, ?, sysdate)";
@@ -77,13 +78,35 @@ public class ProductDAO {
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getMaker());
 			pstmt.setInt(3, vo.getPrice());
-			
+
 			int result = pstmt.executeUpdate();
-			System.out.println(result+"Columns have been updated");
-			
-		}finally {
+			System.out.println(result + "Columns have been updated");
+
+		} finally {
 			closeAll(pstmt, con);
 		}
-		
+	}
+
+	public ArrayList<ProductVO> findAllProductList() throws SQLException {
+		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = getConnection();
+			String sql = "SELECT ID, NAME, TO_CHAR(REGDATE, 'yyyy-mm-dd') as date_string FROM mvc_product";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				list.add(new ProductVO(rs.getInt("ID"), rs.getString("NAME"), rs.getString("date_string")));
+			}
+
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+
+		return list;
 	}
 }

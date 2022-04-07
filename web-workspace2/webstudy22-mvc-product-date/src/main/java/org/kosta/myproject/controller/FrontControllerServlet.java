@@ -24,7 +24,9 @@ public class FrontControllerServlet extends HttpServlet {
 		try {
 			// client 요청을 분석, url을 통해 controller 명 추출
 			String uri = request.getRequestURI();
+			System.out.println(uri);
 			String uriContext = request.getContextPath();
+			System.out.println(uriContext);
 			String controllerName = uri.substring(uriContext.length()+1, uri.length()-3);
 			
 			Controller controller = HandlerMapping.getInstance().create(controllerName);

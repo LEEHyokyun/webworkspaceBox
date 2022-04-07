@@ -10,6 +10,7 @@ public class TestUnitProductDAO {
 		ProductDAO dao = ProductDAO.getInstance();
 		try {
 			System.out.println(dao.findProductById("1"));
+			System.out.println(dao.findAllProductList());
 			//System.out.println(dao.register(new ProductVO()));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

@@ -19,6 +19,10 @@
  * 	* GRANT(권한부여), REVOKE(권한취소), COMMIT(실제 DB에 반영)
  * 	* COMMIT(실제 DB에 반영), ROLLBACK(작업 취소 및 원상태로 회귀)
  * 
+ * ㅁ TCL
+ *  * Transition control language, 데이터 반영어
+ *  * COMMIT, ROLLBACK
+ * 
  * ㅁ Table 
  * 	* 데이터를 저장하는 공간
  * 	* COLUMN : 속성, attribute

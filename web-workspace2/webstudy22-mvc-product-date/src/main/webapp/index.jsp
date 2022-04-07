@@ -20,5 +20,7 @@
 	<input type="number" name="price" placeholder="가격" min="1" required="required"><br>
 	<button type="submit">등록</button>
 </form>
+<br><br>
+<a href="FindAllProductListController.do">상품 전체 리스트 조회</a>
 </body>
 </html>
