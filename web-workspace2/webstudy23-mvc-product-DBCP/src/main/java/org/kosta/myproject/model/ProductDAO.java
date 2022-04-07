@@ -1,0 +1,109 @@
+package org.kosta.myproject.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import javax.sql.DataSource;
+
+public class ProductDAO {
+	private static ProductDAO instance = new ProductDAO();
+	private DataSource dataSource;
+
+	private ProductDAO() { // 생성자에서 dbcp 객체 생성
+		dataSource = DataSourceManager.getInstance().getDataSource();
+	};
+
+	public static ProductDAO getInstance() {
+		return instance;
+	}
+
+	public void closeAll(PreparedStatement pstmt, Connection con) throws SQLException {
+		if (pstmt != null)
+			pstmt.close();
+		if (con != null)
+			con.close(); //con close, 소멸이 아닌 반납
+	}
+
+	public void closeAll(ResultSet rs, PreparedStatement pstmt, Connection con) throws SQLException {
+		if (rs != null)
+			rs.close();
+		closeAll(pstmt, con);
+	}
+
+	public ProductVO findProductById(String productId) throws SQLException {
+		ProductVO vo = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = dataSource.getConnection();
+			String sql = "SELECT ID, NAME, MAKER, PRICE, TO_CHAR(REGDATE, 'yyyy-mm-dd') as date_string FROM mvc_product WHERE id=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, productId);
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				/*
+				 * vo = new ProductVO(rs.getInt(1), rs.getString(2), rs.getString(3),
+				 * rs.getInt(4), rs.getString(5));
+				 */
+				vo = new ProductVO(rs.getInt("ID"), rs.getString("NAME"), rs.getString("MAKER"), rs.getInt("PRICE"),
+						rs.getString("date_string"));
+
+			}
+
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+
+		System.out.println(vo);
+		return vo;
+	}
+
+	public void register(ProductVO vo) throws SQLException {
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			con = dataSource.getConnection();
+			String sql = "INSERT INTO mvc_product(id, name, maker, price, regDate) VALUES(mvc_product_seq.nextval, ?, ?, ?, sysdate)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, vo.getName());
+			pstmt.setString(2, vo.getMaker());
+			pstmt.setInt(3, vo.getPrice());
+
+			int result = pstmt.executeUpdate();
+			System.out.println(result + "Columns have been updated");
+
+		} finally {
+			closeAll(pstmt, con);
+		}
+	}
+
+	public ArrayList<ProductVO> findAllProductList() throws SQLException {
+		ArrayList<ProductVO> list = new ArrayList<ProductVO>();
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			con = dataSource.getConnection();
+			String sql = "SELECT ID, NAME, TO_CHAR(REGDATE, 'yyyy-mm-dd') as date_string FROM mvc_product";
+			pstmt = con.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				list.add(new ProductVO(rs.getInt("ID"), rs.getString("NAME"), rs.getString("date_string")));
+			}
+
+		} finally {
+			closeAll(rs, pstmt, con);
+		}
+
+		return list;
+	}
+}

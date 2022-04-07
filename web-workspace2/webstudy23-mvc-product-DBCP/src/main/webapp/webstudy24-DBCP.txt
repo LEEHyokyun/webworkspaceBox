@@ -1,0 +1,17 @@
+ㅁ DBCP
+	ㅁ 문자열 저장 공간이 String constanct pool, 마찬가지로 "저장공간"
+	ㅁ Connection을 저장하는 공간이며, DB접근시 연결(con)/해제(close)시 하는 작업이 번거로운 사유로 활용하는 개념
+	ㅁ DB접근시 Connection 객체를 미리 생성하고, 이를 반납하는 형식으로 진행(시스템 성능 향상)
+	ㅁ 생성/소멸방식이 아닌 대여/반납형식
+
+ㅁ javax.sql.datasource 인터페이스
+	ㅁ 다양한 dbcp 구현 객체들이 implements하는 인터페이스이다.
+	ㅁ dbcp 구현체를 사용하는 Application 측에서 단일방식으로 다양한 dbcp 구현체를 사용할 수 있도록 한다.
+	ㅁ 즉, dbcp 구현체를 변경하여도 application 동작/의사소통 방식에는 문제가 없도록 구성(결합도 최소화)
+		* 다수의 client가 DB에 접근하고자 할때, dbcp로부터 connection pool을 대여하고, 작업후 반납한다.
+		* 다만 pool 부족할 경우, pool 자원이 날때까지 wait(1초) 혹은 새로 생성한다.
+		* Datasource라는 인터페이스 connection pool을 구현하여 일관된 인터페이스를 제공한다.
+	ㅁ dbcp 환경설정(구현쳬) 구현후, 실제로 커넥션 풀에서 대여하는 커넥션은 getConnection 메소드 하나로만 인터페이싱한다.
+
+ㅁ DBCP와 DAO의 활용방안
+	ㅁ Model - DataSourceManager class 추가, DAO에서 DBCP를 이용하여 대여 및 반납		
