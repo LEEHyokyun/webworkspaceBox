@@ -4,5 +4,7 @@
 	ㅁ JSP, 즉 VIew를 구성할때 사용하는 기술로, 조건문/반복문/자료구조 데이터 표현을 미리 구현해 놓은 태그이다.
 	ㅁ 환경설정이 필요하다.
 		* WEB-INF\lib\JSTL-1.2.jar 파일을 구해야 한다.
+		ㅁ 조건문
 		* <c:choose> tag 내부에 <c:when test="">를 여러 구문 작성으로 if, else if.. 작성
 			ㄴ <c:otherwise>, else 구문
+		* 기본적으로 JSTL의 조건문은 <c:choose>를 기본 frame으로 시작한다.
