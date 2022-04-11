@@ -1,0 +1,42 @@
+ㅁ requirements - 회원관리 시스템
+	* 비회원 상태에서 아이디에 대한 회원 검색이 가능
+	* 아이디에 대한 회원이 존재한다면, 검색된 회원 결과는 아이디-이름-주소-생년월일-가입일시 정보 제공
+		ㄴ 생년월일은 2022-04-11 형식으로 제공, 가입일시는 2022-04-11 1시1분1초 형식으로 제공
+	* 로그인 기능 제공
+	* 로그인 성공시 메인화면에 로그인 폼 대신 회원이름 및 로그아웃 링크가 제공
+	* 로그아웃을 클릭하면 다시 로그인 폼이 제공된다.
+	* 로그인 상태에서는 주소로 회원리스트 검색이 가능하다.
+		ㄴ 회원리스트는 테이블 형식으로 아이디/이름/생년월일 제공
+	* 로그인 상태에서는 회원정보 수정이 가능하다.
+		ㄴ 회원정보 수정은 패스워드, 이름, 	주소, 생년월일을 수정할 수 있다.
+		ㄴ 수정 후 수정된 회원정보를 결과화면에서 제공한다.
+	* 회원가입시에는 아이디 패스워드 이름 주소 생년월일(input type="date")을 입력받아 가입
+	* 등록일시는 시스템에서 자동 처리한다.
+
+ㅁ required concepts
+	* skills : JavaSE, JDBC, SQL, HTML, Javascript, CSS
+	* design pattern : mvc, singleton, FrontController
+
+ㅁ 요구분석 : usecase, 설계 : UML의 class diagram, ERD, UI 설계
+
+ㅁ 구현
+	* File List(basic infra structure, Classes)
+		→ db DDL : mvc-member-ddl.sql
+	* JSTL : WEB-INF/lib/jstl-1.2jar
+	
+	* package name
+		ㄴ org.kosta.myproject.model
+		ㄴ org.kosta.myproject.controller
+	* Serializable(객체직렬화)
+		ㄴ 서버 리로드시 WAS 내부적으로 session 객체를 직렬화하여 data backup, 다시 역직렬화하여 session 객체 및 data 복원에 활용
+		ㄴ MemberVO implements Serializable
+	* DAO 단위테스트를 위해 WEB-INF/lib/tomcat-juli-8.5.77.jar를 추가한다.
+	
+	* Model Class : DataSoturceManager, MemberVO, MemberDAO
+	* Controller : FrontControllerServlet, HandlerMaaping, Controller Interface, implemented controller
+	* View : index.jsp, error.jsp, ...
+	
+ㅁ developing procedures
+	1. id로 회원검색
+	2. 로그인
+	3. 로그아웃
