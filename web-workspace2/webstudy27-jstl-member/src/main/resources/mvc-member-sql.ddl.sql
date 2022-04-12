@@ -20,6 +20,13 @@ VALUES('queen', 'a', '프레디', '오리', TO_DATE('1970-03-11', 'yyyy-mm-dd'),
 INSERT INTO mvc_member (id, password, name, address, birthday, regdate) 
 VALUES('beatles', 'a', '존레논', '용인', TO_DATE('1980-11-23', 'yyyy-mm-dd'), sysdate);
 
+INSERT INTO mvc_member (id, password, name, address, birthday, regdate) 
+VALUES('oop', 'a', '손흥민', '용인', TO_DATE('1990-10-21', 'yyyy-mm-dd'), sysdate);
+
 SELECT name, address, TO_CHAR(birthday, 'yyyy-mm-dd') as bir, TO_CHAR(regdate, 'yyy-mm-dd HH24:MM:SS') as reg FROM mvc_member WHERE id='java' AND password='a';
 
-commit
+INSERT INTO mvc_member(id, password, name, address, birthday, regdate) VALUES('javaking', 'a', '이강인', '판교', TO_DATE('2003-08-19', 'yyyy-mm-dd'), sysdate);
+
+SELECT COUNT(*) FROM mvc_member WHERE id = 'java';
+SELECT COUNT(*) FROM mvc_member WHERE id = 'upstream';
+	commit

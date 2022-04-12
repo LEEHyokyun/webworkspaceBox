@@ -1,0 +1,6 @@
+ㅁ project 구성
+	ㅁ src\main\resources - 요구사항, 분석, 설계
+	ㅁ src\main\java 
+		* model : VO/DAO/DataSourceManager
+		* controller : Controller / implemented objects(Controller)
+	ㅁ webapp - view(jsp)

@@ -11,6 +11,7 @@ public class TestMemberDAO {
 			dao.UnitTest();
 			System.out.println(dao.findMemberById("java"));
 			System.out.println(dao.findMemberById("java2"));
+			System.out.println(dao.checkId("java")); //존재할 경우 true, 존재하지 않을 경우 false
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
