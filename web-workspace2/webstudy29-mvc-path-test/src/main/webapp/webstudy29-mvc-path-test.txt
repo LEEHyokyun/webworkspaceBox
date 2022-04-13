@@ -1,0 +1,8 @@
+ㅁ url 세부적으로 파악하기
+	ㅁ mvc 구조 상에서 url path 세부적으로 파악하기
+	ㅁ form action -> Controller -> view 이동시 forward / redirect path 처리
+	
+1) resources 상대경로시 contextPath EL을 이용한 동적 경로 생성
+<img alt="404error" src="${pageContext.request.contextPath }/images/404error.png">
+
+2) 해당 동적경로를 통해 생성한 경로는 url에 그대로 반영된다는 점에 유의한다.

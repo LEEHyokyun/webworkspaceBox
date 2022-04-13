@@ -1,0 +1,8 @@
+ㅁ FrontController에서의 공통 정책(인증) 처리
+	* refactoring : 입출력 동일, 프로그램 내부구조 개선을 통해 유지보수성 및 가독성 향상
+	ㅁ 인증체크
+		ㅁ 개별 controller에서의 로그인 인증체크를, FrontController에서 일괄적으로 처리한다.
+		ㅁ 로그인 상태시 이후의 view, 비로그인 상태시 index.jsp로 이동
+	ㅁ FrontControllerServlet에서 별도로 인증체크를 모듈화하여 전담시킨 CheckLoginInterceptor
+		* false 반환시 개별 컨트롤러를 실행시키지 않고, index.jsp로 강제 이동시킨다.
+	ㅁ 인증체크가 필요한 서비스가 많아질 경우, FrontController 측에서 일괄 처리하므로 효과적이다.
