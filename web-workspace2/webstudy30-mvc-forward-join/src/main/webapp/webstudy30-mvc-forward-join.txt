@@ -1,0 +1,18 @@
+ㅁ 전체 구성
+1) DB modeling : ERD (src\main\resources)
+2) SQL DDL
+3) Application modeling : Class diagram (src\main\resources)
+
+ㅁ 기본 환경설정
+	* WEB-INF\lib(jstl > jstl이용, tomcat > 단위테스트 (application 실행))
+	* org.kosta.myproject.model > DataSourceManager(dbcp)
+	* org.kosta.myproject.controller > FrontControllerServlet, HandlerMapping, CheckLoginInterceptor, Controller
+	
+ㅁ requirements
+	1) 사원수 출력
+	* 최초 index.jsp 실행시 총사원수(3명) 정보가 출력되어야 한다.
+	* 총 사원수는 DB에 저장되어 조회할 수 있어야 한다.
+	* jsp forward action tag를 활용, Controller를 실행 및 model과 연동하여 view에 출력한다.
+		ㄴ 말 그대로, 특정 jsp 파일을 그대로 forward하여 해당 jsp파일을 그대로 보여준다.
+		ㄴ index.jsp -> forward:jsp -> home.jsp
+	
