@@ -21,7 +21,7 @@ public class EmployeeDAO {
 		return instance;
 	};
 
-	public void closeAll(PreparedStatement pstmt, Connection con) throws Exception {
+	public void closeAll(PreparedStatement pstmt, Connection con) throws SQLException {
 		if (pstmt != null)
 			pstmt.close();
 		if (con != null)
@@ -98,7 +98,7 @@ public class EmployeeDAO {
 		Connection con = dataSource.getConnection();
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		EmployeeVO evo = new EmployeeVO();
+		EmployeeVO evo = null;
 		
 		try {
 			StringBuffer sql = new StringBuffer("SELECT e.empno, e.ename, e.sal, d.deptno, d.dname, d.loc, d.tel ");

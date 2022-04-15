@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="model.PersonVO"%>
 <%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -21,5 +22,18 @@
 <c:forEach items="${list }" var="person">
 	${person.name } ${person.age }<br>
 </c:forEach>
+<%--
+	list에서 map을 저장하였을 경우
+ --%>
+ <%
+ 	ArrayList<HashMap<String, String>> testList = new ArrayList<HashMap<String, String>>();
+ 	HashMap<String, String> map = new HashMap<String, String>();
+ 	map.put("name", "hyokyun");
+ 	testList.add(map);
+ 	request.setAttribute("testList", testList);
+ %>
+ <c:forEach items="${testList }" var="string">
+ 	${string.name }
+ </c:forEach>
 </body>
 </html>

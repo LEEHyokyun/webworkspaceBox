@@ -17,3 +17,14 @@
 		ㄴ index.jsp -> forward:jsp -> home.jsp
 	
 	..etc.
+
+ㅁ view 구조에서 동일한 template(html tag, css, javascript 등)를 적용
+	* 이러한 반복적이고 일괄적 template을 적용하기 위해 layout.jsp를 설정하였다.
+		ㄴ 이런 중복 작업을 피하고 효율적으로 view 구현을 하기 위한 방안이 필요
+		ㄴ main ui
+	* 내부적으로 c:import(jstl)를 통해 호출되는 sub ui는 기본적으로 controller에서 url 변수에 입력하여 전달한다.
+		ㄴ 동적으로 컨텐츠 영역을 설정해줄 수 있다.
+	* view에서 단독 view를 제외하고는, controller를 호출한다.
+	
+ㅁ view에서 사용하는 url path
+	* ${pageContext.request.contextPath} -> 기본 경로에 대해서 별도 설정이 필요한 경우

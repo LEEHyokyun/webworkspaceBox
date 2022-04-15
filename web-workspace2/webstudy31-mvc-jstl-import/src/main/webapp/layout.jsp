@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- layout.jsp : 웹사이트의 메인 ui --%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,19 +11,14 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-<title>home.jsp</title>
+<title>layout.jsp</title>
 </head>
 <body>
-<div class="container">        
-  <c:import url="header.jsp" />
-<h3>사원관리</h3>
-<br>
-현재 사원수는 ${requestScope.totalEmpCount } 입니다.
+<div class="container">
+<a href="HomeController.do">Home</a>
 <br><br>
-<a href="EmployeeListController.do">사원리스트 조회하기</a>
-<br><br>
-<a href="EmployeeCountGroupByDeptController.do">부서별 사원수</a>
-<br><br>
+<!-- 개별 Controller에서 받아오는 view -->
+<c:import url="${url }"/>
 </div>
 </body>
 </html>
