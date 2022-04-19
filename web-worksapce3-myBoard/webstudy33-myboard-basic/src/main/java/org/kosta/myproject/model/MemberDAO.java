@@ -31,4 +31,28 @@ public class MemberDAO {
 			rs.close();
 		closeAll(pstmt, con);
 	}
+
+	public MemberVO login(String id, String password) throws Exception {
+		MemberVO vo = null;
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			String sql = "SELECT name FROM member WHERE id=? AND password=?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, password);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				vo = new MemberVO(id, password, rs.getString("name"));
+			}
+			
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return vo;
+	}
 }

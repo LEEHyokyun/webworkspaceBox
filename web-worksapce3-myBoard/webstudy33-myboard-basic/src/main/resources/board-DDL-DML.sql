@@ -58,3 +58,7 @@ SELECT b.no, b.title, m.name, TO_CHAR(time_posted, 'yyyy.mm.dd') as time_posted 
 FROM member m
 INNER JOIN board b ON m.id=b.id
 ORDER BY b.no DESC
+
+--login SQL
+SELECT name FROM member WHERE id='java' AND password='a';
+SELECT * FROM member;

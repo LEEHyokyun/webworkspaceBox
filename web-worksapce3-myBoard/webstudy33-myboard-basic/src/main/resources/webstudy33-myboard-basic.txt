@@ -49,5 +49,6 @@
 					 MemberVO, BoardVO, MemberDAO, BoardDAO
 			Controller : FrontControllerServlet, HandlerMapping, Controller, CheckLoginInterceptor
 		- view main UI(layout.jsp)
-		Doing : - 
-		Done : -
+	 	- 게시물리스트 -> 로그인, 로그아웃
+	 	- 게시물리스트 -> 로그인시 링크 부여 / 상세글보기 / 삭제 / 수정
+		* Doing, Done
