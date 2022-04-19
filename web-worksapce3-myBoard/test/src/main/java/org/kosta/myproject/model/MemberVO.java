@@ -8,6 +8,9 @@ public class MemberVO {
 		this.id = id;
 	}
 
+	/*
+	 * 주석추가
+	 */
 	@Override
 	public String toString() {
 		return "MemberVO [id=" + id + "]";
