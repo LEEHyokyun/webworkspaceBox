@@ -1,0 +1,3 @@
+ㅁ myboard
+
+※ 게시글 content - CLOB data type
