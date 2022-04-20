@@ -9,5 +9,7 @@
 </head>
 <body>
 sjw test4-step1
+sjw test4-step2
+sjw test4-step3
 </body>
 </html>
