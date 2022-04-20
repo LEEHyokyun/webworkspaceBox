@@ -27,7 +27,7 @@ public class PostVO {
 		this.timePosted = timePosted;
 		this.memberVO = memberVO;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "PostVO [no=" + no + ", title=" + title + ", content=" + content + ", hits=" + hits + ", timePosted="

@@ -62,3 +62,19 @@ ORDER BY b.no DESC
 --login SQL
 SELECT name FROM member WHERE id='java' AND password='a';
 SELECT * FROM member;
+
+--상세 게시글 보기 SQL
+-- board : no, title, content, hits, to_char(time_posted, 'yyyy.mm.dd HH24:MI:SS') as time_posted
+-- member : id, name
+
+SELECT b.no, b.title, b.content, b.hits, TO_CHAR(b.time_posted, 'yyyy.mm.dd HH24:MI:SS') as time_posted, m.id, m.name
+FROM board b
+INNER JOIN member m ON m.id=b.id
+WHERE no=22;
+
+SELECT to_char(time_posted, 'yyyy.mm.dd HH24:MI:SS') as time_posted
+FROM board
+WHERE no = 22;
+
+--게시글작성 SQL
+INSERT INTO board(no, title, content, time_posted, id) VALUES(board_seq.nextval , '즐공' '웹공부중', sysdate, 'java');

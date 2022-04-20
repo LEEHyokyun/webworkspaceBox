@@ -17,7 +17,7 @@
  	</c:when>
  	<c:otherwise>
  		 <a href="ListController.do">홈</a>
- 		<a href="WritePostFormController.do">글쓰기</a>
+ 		<a href="WritePostController.do">글쓰기</a>
  		<%-- javscript logout function 호출--%>
  		<a href="javascript:logout()">로그아웃</a>
  		<form id="logoutForm" method="post" action="LogoutController.do"></form>

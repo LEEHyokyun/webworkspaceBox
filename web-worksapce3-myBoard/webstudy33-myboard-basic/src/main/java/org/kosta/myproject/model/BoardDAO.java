@@ -60,4 +60,54 @@ public class BoardDAO {
 		
 		return list;
 	}
+
+	public PostVO findPostByNo(String no) throws Exception {
+		PostVO pvo = new PostVO();
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			
+			StringBuilder sql = new StringBuilder("SELECT b.no, b.title, b.content, b.hits, TO_CHAR(b.time_posted, 'yyyy.mm.dd HH24:MI:SS') as time_posted, m.name, m.id, m.password ");
+			sql.append("FROM board b ");
+			sql.append("INNER JOIN member m ON m.id=b.id ");
+			sql.append("WHERE no=?");
+			
+			pstmt = con.prepareStatement(sql.toString());
+			pstmt.setString(1, no);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				MemberVO mvo = new MemberVO(rs.getString("id"), rs.getString("password"), rs.getString("name"));
+				pvo = new PostVO(rs.getInt("no"), rs.getString("title"), rs.getString("content"), rs.getInt("hits"), rs.getString("time_posted"), mvo);
+			}
+			
+			System.out.println(pvo);
+			
+		}finally {
+			closeAll(rs, pstmt, con);
+		}
+		return pvo;
+	}
+	
+	public void posting(PostVO postVO) throws	Exception{
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "INSERT INTO board(no, title, content, time_posted, id) VALUES(board_seq.nextval , ?, ?, sysdate, ?)";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, postVO.getTitle());
+			pstmt.setString(2, postVO.getContent());
+			pstmt.setString(3, postVO.getMemberVO().getId());
+			pstmt.executeUpdate();
+			
+			
+			
+		}finally {
+			closeAll(pstmt, con);
+		}
+		
+	}
 }
