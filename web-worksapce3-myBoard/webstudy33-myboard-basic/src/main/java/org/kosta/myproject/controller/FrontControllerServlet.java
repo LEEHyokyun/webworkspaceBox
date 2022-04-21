@@ -17,8 +17,8 @@ public class FrontControllerServlet extends HttpServlet {
 	public FrontControllerServlet() {
 		super();
 	}
-	
-	//FCServlet - Controller 객체를 배당 및 생성하는 Factory object.
+
+	// FCServlet - Controller 객체를 배당 및 생성하는 Factory object.
 	protected void doDispatch(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		try {
@@ -29,11 +29,14 @@ public class FrontControllerServlet extends HttpServlet {
 			System.out.println(uriContext);
 			String controllerName = uri.substring(uriContext.length()+1, uri.length()-3);
 			//인증체크 공통정책
-			/*
-			 * boolean result = CheckLoginInterceptor.getInstance().checkLogin(request,
-			 * controllerName); if(!result) { response.sendRedirect("index.jsp"); return;
-			 * //redirect후 해당 메서드 실행 종료 }
-			 */
+			
+			  boolean result = CheckLoginInterceptor.getInstance().checkLogin(request, controllerName); 
+			  if(!result) {
+				  response.sendRedirect("index.jsp"); 
+				  return;
+			  }
+			  //redirect후 해당 메서드 실행 종료 }
+			 
 			
 			Controller controller = HandlerMapping.getInstance().create(controllerName);
 			System.out.println(controller);

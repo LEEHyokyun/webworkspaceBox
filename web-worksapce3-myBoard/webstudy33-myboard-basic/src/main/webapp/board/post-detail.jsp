@@ -21,13 +21,33 @@
 	<c:if test="${requestScope.pvo.memberVO.id == sessionScope.mvo.id }">
 	<tr>
 		<td colspan="5" class="text-center">
-			<button type="button">삭제</button>
-			<button type="button">수정</button>
+			<form id="deleteForm" action="DeletePostController.do" method="post">
+				<input type="hidden" name="no" value="${requestScope.pvo.no }">
+			</form>
+			<button type="button" onclick=deletePost()>삭제</button>
+			
+			<button type="button" onclick=updatePost()>수정</button>
+			<form id="updateForm" action="UpdatePostFormController.do" method="post">
+				<input type="hidden" name="no" value="${requestScope.pvo.no }">
+			</form>
 		</td>
 		<%-- 작성자가 로그인한 자신이라면, 이 영역에 삭제와 수정 기능 제공 
 			variable comparison : 게시글 작성자 아이디 = session 작성자 아이디
 			button -> button type, 삭제 or 수정 
 		--%>
 	</tr>
+	<script type="text/javascript">
+		function deletePost(){
+			if(confirm("삭제하시겠습니까?")){
+				document.getElementById("deleteForm").submit();
+			}
+		}
+		
+		function updatePost(){
+			if(confirm("수정하시겠습니까?")){
+				document.getElementById("updateForm").submit();
+			}
+		}
+	</script>
 	</c:if>
 </table>

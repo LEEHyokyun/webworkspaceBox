@@ -12,4 +12,7 @@
  				}
  			}
  		</script>
-※ 
+※ request post method 확인
+※ if(!request.getMethod().equals("POST")) {
+			throw new ServletException(getClass().getName()+" POST 방식만 허용되는 요청입니다.");
+		}

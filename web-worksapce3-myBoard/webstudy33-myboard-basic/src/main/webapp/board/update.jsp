@@ -3,15 +3,18 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <body>
 	<%--게시글 작성폼 --%>
-	<form method="post" action="WritePostFormController.do">
+	<form method="post" action="UpdatePostController.do">
 		<table class="table">
 			<tr>
-				<td><input type="text" name="title" placeholder="글제목"
-					required="required"></td>
+				<td>
+					<input type="hidden" name="no" value="${requestScope.pvo.no }">
+					<input type="text" name="title" value="${requestScope.pvo.title }" placeholder="글제목"
+					required="required">
+				</td>
 			</tr>
 			<tr>
 				<td><textarea row="10" class="form-control" name="content"
-					placeholder="본문내용" required="required"></textarea></td>
+					placeholder="본문내용" required="required">${requestScope.pvo.content }</textarea></td>
 			</tr>
 		</table>
 		<div class="text-center">

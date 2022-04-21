@@ -1,5 +1,7 @@
 package org.kosta.myproject.controller;
 
+import java.util.ArrayList;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,9 +19,12 @@ public class LoginController implements Controller {
 		MemberVO vo = MemberDAO.getInstance().login(id, password);
 		String viewName = null;
 		
+		ArrayList<String> myBoardList = new ArrayList<String>();
+		
 		if(vo == null)
 			viewName="member/login-fail.jsp";
 		else {
+			session.setAttribute("myBoardList", myBoardList);
 			session.setAttribute("mvo", vo);
 			//ListController로 이동
 			viewName="redirect:ListController.do";

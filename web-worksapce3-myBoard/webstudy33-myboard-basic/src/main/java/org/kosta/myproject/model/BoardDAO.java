@@ -110,4 +110,55 @@ public class BoardDAO {
 		}
 		
 	}
+
+	public void updateHits(String no) throws SQLException {
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "UPDATE board SET hits=hits+1 WHERE no =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, no);
+			pstmt.executeUpdate();
+			
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}
+
+	public void deletePostByNo(String no) throws SQLException {
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "DELETE FROM board WHERE no = ?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, no);
+			pstmt.executeUpdate();
+			
+			System.out.println("게시글 삭제");
+			
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}
+	
+	public void updatePost(PostVO pvo) throws SQLException {
+		Connection con = dataSource.getConnection();
+		PreparedStatement pstmt = null;
+		
+		try {
+			String sql = "UPDATE board SET title=?, content=? WHERE no =?";
+			pstmt = con.prepareStatement(sql);
+			pstmt.setString(1, pvo.getTitle());
+			pstmt.setString(2, pvo.getContent());
+			pstmt.setInt(3, pvo.getNo()); //새로운 pvo 객체를 생성하였으므로, pvo No value에 올바른 No value가 할당되었는지 확인.
+			//System.out.println(pvo.getNo());
+			
+			int result = pstmt.executeUpdate();
+			System.out.println(result+ "Columns have been updated.");
+		}finally {
+			closeAll(pstmt, con);
+		}
+	}
 }

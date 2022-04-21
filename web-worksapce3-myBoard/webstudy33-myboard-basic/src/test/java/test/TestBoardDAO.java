@@ -32,6 +32,16 @@ public class TestBoardDAO {
 			 * pvo.setTitle("타로킹"); pvo.setContent("영험한 기운"); pvo.setMemberVO(mvo);
 			 * dao.posting(pvo); System.out.println("글쓰기가 완료되었습니다.");
 			 */
+			
+			//조회수 작성
+			/*
+			 * String no = "22"; dao.updateHits(no); System.out.println("조회수 증가"); PostVO
+			 * pvo = dao.findPostByNo(no); System.out.println(pvo.getHits());
+			 */
+			
+			//게시글 삭제
+			String no = "23";
+			dao.deletePostByNo(no);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}

@@ -78,3 +78,13 @@ WHERE no = 22;
 
 --게시글작성 SQL
 INSERT INTO board(no, title, content, time_posted, id) VALUES(board_seq.nextval , '즐공' '웹공부중', sysdate, 'java');
+
+--조회수 업데이트 SQL
+UPDATE board SET hits=hits+1 WHERE no ='22';
+
+--게시물 삭제
+SELECT * FROM board
+DELETE FROM board WHERE no = '22';
+
+--게시글 수정
+SELECT * FROM board

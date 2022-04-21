@@ -16,10 +16,8 @@ public class CheckLoginInterceptor {
 	private ArrayList<String> permitAllList = new ArrayList<String>();
 	
 	private CheckLoginInterceptor() {
-		permitAllList.add("CheckIdController");
-		permitAllList.add("FindMemberByIdController");
+		permitAllList.add("ListController");
 		permitAllList.add("LoginController");
-		permitAllList.add("RegisterMemberController");
 	};
 
 	public static CheckLoginInterceptor getInstance() {
