@@ -25,7 +25,6 @@ public class PostDetailController implements Controller {
 		
 		if(myBoardList == null || !myBoardList.contains(no))  {
 			myBoardList.add(no);
-			session.setAttribute("myBoardList", myBoardList);
 			BoardDAO.getInstance().updateHits(no);
 		}
 		
