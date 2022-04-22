@@ -1,0 +1,5 @@
+ㅁ pagination
+	ㅁ 특정 페이지에 게시할 게시글 수를 정하고, 그 이상의 게시글들은 다음 페이지에 나타낸다.
+		* org.kosta.model : 게시판의 페이징 처리
+		* org.kosta.myproject.model.Pagination.class : 페이징 처리를 위한 로직 정의
+	ㅁ row numbering(게시글 시작번호), 게시글 고유 번호(PK)는 불가능하다.
