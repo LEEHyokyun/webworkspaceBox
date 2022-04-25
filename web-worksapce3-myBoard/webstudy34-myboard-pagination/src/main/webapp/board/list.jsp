@@ -51,6 +51,6 @@
   	
   </c:forEach>
   <c:if test="${requestScope.pagination.nextPageGroup }">
-  <li class="page-item"><a class="page-link" href="ListController.do?pageNo=${requestScope.pagination.endPageOfPageGroup+1 }">Next</a></li>
+  	<li class="page-item"><a class="page-link" href="ListController.do?pageNo=${requestScope.pagination.endPageOfPageGroup+1 }">Next</a></li>
   </c:if>
 </ul>

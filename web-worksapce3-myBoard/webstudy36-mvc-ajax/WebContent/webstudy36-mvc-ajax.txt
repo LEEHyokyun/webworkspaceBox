@@ -1,0 +1,4 @@
+ㅁ MVC, FrontController Design Pattern에서의 ajax 활용방안
+	ㅁ AjaxView (servlet) -> Ajax 응답을 위한 서블릿, AJax 응답은 web page가 아니라 데이터만 응답하므로 서블릿으로 응답 프로그램 구현
+	* 각 컨트롤러 에서는 AJax 통신시 return "AjaxView";로 FrontControllerServlet으로 반환
+	* 필요한 데이터(문자열/json)는 request.setAttribute("responsebody", 문자열/json)으로 AjaxView에 공유
